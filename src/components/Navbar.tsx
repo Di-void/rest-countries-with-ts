@@ -18,6 +18,7 @@ const Navbar = () => {
 
 const Wrapper = styled.nav`
   /* border: 1px solid black; */
+  z-index: 99 !important;
   background-color: white;
   position: fixed;
   top: 0;
@@ -26,7 +27,7 @@ const Wrapper = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 0.75rem;
-  box-shadow: 0px 16px 7px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 13px 2px -9px rgba(0, 0, 0, 0.1);
 
   button {
     display: flex;

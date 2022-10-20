@@ -1,47 +1,42 @@
 import React from "react";
 import styled from "styled-components";
-import { Country } from "../interfaces";
-import { numToString } from "../utils/functions";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-// TYPES AND INTERFACES
-
-interface Props {
-  country: Country;
-}
-
-// ? MAIN COMPONENT
-const CountryCard: React.FC<Props> = ({ country }) => {
-  // * STATE VALUES ANF CONTEXT
-  const {
-    commonName,
-    flags: { png },
-    population,
-    region,
-    capital,
-  } = country;
-  // * LOGIC LAYER
-
-  // ! RETs.....
+// ? [---------LOADING COMPONENTS-------------]
+const CountryCardLoader = () => {
+  // ! RETs...
   return (
     <Wrapper>
       <div className="img">
-        <img src={png} alt="country-img" />
+        <Skeleton height="100%" />
       </div>
 
       <div className="info">
         <header>
-          <h3>{commonName}</h3>
+          <h3>
+            <Skeleton count={1} />
+          </h3>
         </header>
 
         <div className="metrics">
           <h5>
-            Population: <span>{numToString(population)}</span>
+            <span>Population:</span>
+            <div>
+              <Skeleton width="100%" containerClassName="ll" count={1} />
+            </div>
           </h5>
           <h5>
-            Region: <span>{region}</span>
+            <span>Region:</span>
+            <div>
+              <Skeleton width="100%" count={1} />
+            </div>
           </h5>
           <h5>
-            Capital: <span>{capital}</span>
+            <span>Capital:</span>
+            <div>
+              <Skeleton width="100%" count={1} />
+            </div>
           </h5>
         </div>
       </div>
@@ -51,20 +46,16 @@ const CountryCard: React.FC<Props> = ({ country }) => {
 
 const Wrapper = styled.article`
   /* border: 1px solid black; */
-  /* padding: 0.5rem; */
   overflow: hidden;
   border-radius: 7px;
   box-shadow: 0px 4px 21px -4px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 
-  &:hover {
-    box-shadow: 0px 4px 7px 17px rgba(0, 0, 0, 0.1);
-  }
   /* =====IMAGE BOX====== */
   .img {
     width: 100%;
-    height: 55%;
+    height: 200px;
     img {
       width: 100%;
       height: 100%;
@@ -82,12 +73,16 @@ const Wrapper = styled.article`
 
     .metrics {
       margin-top: 15px;
+
       h5 {
+        padding: 0 0.35rem;
         font-size: 14px;
+        display: flex;
+        justify-content: space-between;
         font-weight: 600;
 
-        span {
-          font-weight: 300;
+        div {
+          width: 70%;
         }
       }
     }
@@ -96,4 +91,4 @@ const Wrapper = styled.article`
   /* ==========END INFO BOX========= */
 `;
 
-export default CountryCard;
+export default CountryCardLoader;

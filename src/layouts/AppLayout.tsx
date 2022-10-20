@@ -8,7 +8,7 @@ const AppLayout = () => {
   return (
     <AppLayoutStyles>
       <Navbar />
-      <section>
+      <section className="outlet_section">
         <Outlet />
       </section>
     </AppLayoutStyles>

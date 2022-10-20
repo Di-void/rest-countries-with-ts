@@ -2,11 +2,12 @@ import React from "react";
 import HomePage from "../components/styled/HomePage";
 import { GoSearch } from "react-icons/go";
 import { CountryCard } from "../components";
+import CountryCardLoader from "../components/loading/CCLoader";
 import { useGlobalContext } from "../context";
 
 const Home = () => {
   // * STATE VALUES AND CONTEXT
-  const { allCountries } = useGlobalContext();
+  const { allCountries, isLoading } = useGlobalContext();
   // console.log(allCountries);
 
   // * LOGIC LAYER
@@ -49,9 +50,13 @@ const Home = () => {
         </header>
 
         <div className="countries">
-          {allCountries.map((country) => {
-            return <CountryCard key={country.id} country={country} />;
-          })}
+          {isLoading
+            ? allCountries.map((country) => {
+                return <CountryCardLoader key={country.id} />;
+              })
+            : allCountries.map((country) => {
+                return <CountryCard key={country.id} country={country} />;
+              })}
         </div>
       </div>
     </HomePage>

@@ -44,6 +44,7 @@ export interface Country {
 
 export interface AppContextType {
   allCountries: Country[];
+  isLoading: boolean;
   // hello: string;
 }
 

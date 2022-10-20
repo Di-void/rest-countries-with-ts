@@ -1,5 +1,5 @@
 import Navbar from "./Navbar";
-import Loading from "./Loading";
+import CountryCardLoader from "./loading/CCLoader";
 import CountryCard from "./CountryCard";
 
-export { Navbar, Loading, CountryCard };
+export { Navbar, CountryCardLoader, CountryCard };

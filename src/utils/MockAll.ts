@@ -1472,7 +1472,7 @@ export const baseRes = [
 
 // Re-arranged response from api request for ---------- **all countries** --------
 
-export const allCountries: Country[] = baseRes.map((country) => {
+export const mockAll: Country[] = baseRes.map((country) => {
   const {
     name: { common: commonName, official: officialName, nativeName },
     tld,

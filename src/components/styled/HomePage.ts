@@ -13,7 +13,7 @@ const HomePage = styled.main`
         box-shadow: 0px 4px 21px -4px rgba(0, 0, 0, 0.1);
         background-color: white;
         color: var(--clr-LMInp);
-        padding: 1.5rem 1.5rem;
+        padding: 0 1.5rem;
         display: flex;
         align-items: center;
         .s-icon {
@@ -26,8 +26,9 @@ const HomePage = styled.main`
         }
 
         .input {
+          padding: 1.5rem 0;
+          height: 100%;
           width: 80%;
-          /* border: 1px solid black; */
           margin-left: 30px;
           input {
             width: 100%;
@@ -77,7 +78,7 @@ const HomePage = styled.main`
       padding: 1.2rem 1.4rem;
       margin-top: 30px;
       display: grid;
-      grid-template-rows: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 350px);
       grid-row-gap: 1.5em;
     }
   }
