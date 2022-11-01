@@ -5,7 +5,7 @@
 // country object
 
 export interface Country {
-  id: string;
+  id: number;
   commonName: string;
   officialName: string;
   nativeName: {
@@ -45,7 +45,20 @@ export interface Country {
 export interface AppContextType {
   allCountries: Country[];
   isLoading: boolean;
+  error: { msg: string; status: boolean };
+  filterByRegion: (val: Region) => Promise<void>;
+  saveOptToLocalStorage: (opt: Region) => void;
+  getOptFromLocalStorage: () => Region;
   // hello: string;
 }
+
+// LITERAL TYPE
+export type Region =
+  | "africa"
+  | "america"
+  | "asia"
+  | "europe"
+  | "oceania"
+  | "all";
 
 // ==========END CONTEXT INTERFACE=========

@@ -50,17 +50,20 @@ const HomePage = styled.main`
 
       .select_regions {
         /* border: 1px solid black; */
+        background-color: white;
         margin-top: 30px;
         width: 47%;
+        height: 50px;
         max-width: 210px;
         box-shadow: 0px 4px 21px -4px rgba(0, 0, 0, 0.1);
-        padding: 1rem 0.75rem;
+        padding: 0.3rem 0.75rem;
 
         select {
           outline: none;
           border: transparent;
           background-color: white;
           width: 100%;
+          height: 100%;
           font-size: 14px;
           font-family: var(--ff-primary);
 
@@ -80,6 +83,57 @@ const HomePage = styled.main`
       display: grid;
       grid-template-rows: repeat(8, 350px);
       grid-row-gap: 1.5em;
+
+      /* =========LINK=========== */
+      .link {
+        display: block;
+        text-decoration: none;
+        overflow: hidden;
+        border-radius: 7px;
+        box-shadow: 0px 4px 21px -4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: 0px 4px 7px 17px rgba(0, 0, 0, 0.1);
+        }
+        /* =====IMAGE BOX====== */
+        .img {
+          width: 100%;
+          height: 55%;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        /* ========IMAGE BOX====== */
+
+        /* ========INFO BOX========== */
+        .info {
+          padding: 0.75rem;
+          color: black;
+
+          header {
+            //
+          }
+
+          .metrics {
+            margin-top: 15px;
+            h5 {
+              font-size: 14px;
+              font-weight: 600;
+
+              span {
+                font-weight: 300;
+              }
+            }
+          }
+        }
+
+        /* ==========END INFO BOX========= */
+      }
+
+      /* =========END LINK========= */
     }
   }
 `;

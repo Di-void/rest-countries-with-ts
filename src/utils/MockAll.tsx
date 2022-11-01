@@ -1,4 +1,5 @@
 import { Country } from "../interfaces";
+import Skeleton from "react-loading-skeleton";
 
 // MOCK API RESPONSE FOR ALL COUNTRIES REQUEST
 export const baseRes = [
@@ -1472,39 +1473,69 @@ export const baseRes = [
 
 // Re-arranged response from api request for ---------- **all countries** --------
 
-export const mockAll: Country[] = baseRes.map((country) => {
-  const {
-    name: { common: commonName, official: officialName, nativeName },
-    tld,
-    currencies,
-    capital,
-    region,
-    subregion,
-    languages,
-    borders,
-    population,
-    flags,
-  } = country;
+// export const mockAll: Country[] = baseRes.map((country) => {
+//   const {
+//     name: { common: commonName, official: officialName, nativeName },
+//     tld,
+//     currencies,
+//     capital,
+//     region,
+//     subregion,
+//     languages,
+//     borders,
+//     population,
+//     flags,
+//   } = country;
 
-  const id = Math.random().toString(36).substring(2, 7);
+//   const id = Math.random().toString(36).substring(2, 7);
 
-  return {
-    id,
-    commonName,
-    officialName,
-    nativeName,
-    tld,
-    currencies,
-    region,
-    capital,
-    subregion,
-    languages,
-    borders,
-    population,
-    flags,
-  };
-});
+//   return {
+//     id,
+//     commonName,
+//     officialName,
+//     nativeName,
+//     tld,
+//     currencies,
+//     region,
+//     capital,
+//     subregion,
+//     languages,
+//     borders,
+//     population,
+//     flags,
+//   };
+// });
 
+export const mockAll = [
+  {
+    id: 1,
+  },
+  {
+    id: 2,
+  },
+  {
+    id: 3,
+  },
+  {
+    id: 4,
+  },
+  {
+    id: 5,
+  },
+  {
+    id: 6,
+  },
+  {
+    id: 7,
+  },
+  {
+    id: 8,
+  },
+];
+
+export interface countryPlaceholder {
+  [key: string]: any;
+}
 // NEEDED PROPS FORM allCountries
 // ( name, tld, currencies, region, capital, subregion, languages, borders, population, flags )
 /* 

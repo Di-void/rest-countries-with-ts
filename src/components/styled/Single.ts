@@ -32,6 +32,7 @@ const SingleStyles = styled.section`
   .center {
     //
     .flag {
+      height: 250px;
       width: 100%;
       img {
         width: 100%;

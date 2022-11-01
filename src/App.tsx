@@ -8,7 +8,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<AppLayout />}>
-            <Route index element={<SingleCountry />} />
+            <Route index element={<Home />} />
+            <Route path="info/:id" element={<SingleCountry />} />
           </Route>
         </Routes>
       </Router>
