@@ -1,6 +1,3 @@
-import { Country } from "../interfaces";
-import Skeleton from "react-loading-skeleton";
-
 // MOCK API RESPONSE FOR ALL COUNTRIES REQUEST
 export const baseRes = [
   // Results for all countries
@@ -1470,41 +1467,6 @@ export const baseRes = [
     },
   },
 ];
-
-// Re-arranged response from api request for ---------- **all countries** --------
-
-// export const mockAll: Country[] = baseRes.map((country) => {
-//   const {
-//     name: { common: commonName, official: officialName, nativeName },
-//     tld,
-//     currencies,
-//     capital,
-//     region,
-//     subregion,
-//     languages,
-//     borders,
-//     population,
-//     flags,
-//   } = country;
-
-//   const id = Math.random().toString(36).substring(2, 7);
-
-//   return {
-//     id,
-//     commonName,
-//     officialName,
-//     nativeName,
-//     tld,
-//     currencies,
-//     region,
-//     capital,
-//     subregion,
-//     languages,
-//     borders,
-//     population,
-//     flags,
-//   };
-// });
 
 export const mockAll = [
   {
