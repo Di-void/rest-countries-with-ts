@@ -4,6 +4,18 @@
 
 // country object
 
+export type currencies = {
+  [key: string]:
+    | {
+        name: string | undefined;
+      }
+    | undefined;
+};
+
+export type langs = {
+  [key: string]: string | undefined;
+};
+
 export interface Country {
   id: number;
   commonName: string;
@@ -17,19 +29,11 @@ export interface Country {
       | undefined;
   };
   tld: string[];
-  currencies: {
-    [key: string]:
-      | {
-          name: string | undefined;
-        }
-      | undefined;
-  };
+  currencies?: currencies;
   region: string;
-  capital: string[];
-  subregion: string;
-  languages: {
-    [key: string]: string | undefined;
-  };
+  capital?: string[];
+  subregion?: string;
+  languages: langs;
   borders?: string[];
   population: number;
   flags: {

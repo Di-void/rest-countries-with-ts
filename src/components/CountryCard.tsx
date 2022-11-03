@@ -39,7 +39,7 @@ const CountryCard: React.FC<Props> = ({ country }) => {
             Region: <span>{region}</span>
           </h5>
           <h5>
-            Capital: <span>{capital}</span>
+            Capital: <span>{capital ? capital[0] : "Nil"}</span>
           </h5>
         </div>
       </div>

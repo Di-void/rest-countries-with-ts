@@ -2,7 +2,7 @@
 
 // ? NUMBER TO STRING FUNCTION
 import _ from "lodash";
-import { Country } from "../interfaces";
+import { Country, currencies, langs } from "../interfaces";
 
 export const numToString = (num: number): string => {
   let newNum = num.toLocaleString("en-US");
@@ -173,4 +173,20 @@ export const formatData = <T extends paramGeneric>(
   });
 
   return finalDataSet;
+};
+
+// ? HELPER FOR FORMATTING CURRENCIES
+
+export const formatCurrencies = (arg: currencies) => {
+  let _currencies = Object.values(arg).map((curr) => curr?.name);
+  const stringed_currs = _currencies.join(", ");
+  return stringed_currs;
+};
+
+// ? HELPER FOR FORMATTING LANGUAGES
+
+export const formatLangs = (arg: langs) => {
+  let _langs = Object.values(arg) as string[];
+  const stringed_langs = _langs.join(", ");
+  return stringed_langs;
 };

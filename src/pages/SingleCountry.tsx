@@ -5,6 +5,8 @@ import { BiArrowBack } from "react-icons/bi";
 import {
   numToString,
   formatNativeName,
+  formatCurrencies,
+  formatLangs,
   paramGeneric,
 } from "../utils/functions";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -44,15 +46,10 @@ const SingleCountry = () => {
   ) as Country;
   // console.log(newCountry);
 
-  const { languages, currencies, nativeName, population } = newCountry;
-
+  const { languages, currencies, nativeName, population, capital } = newCountry;
   // languages
-  let _langs = Object.values(languages) as string[];
-  const stringed_langs = _langs.join(", ");
 
   // currencies
-  let _currencies = Object.values(currencies).map((curr) => curr?.name);
-  const stringed_currs = _currencies.join(", ");
 
   // !TG(TYPE GUARD)
   // if ("borders" in Country) {
@@ -111,7 +108,7 @@ const SingleCountry = () => {
                 {/* Sub Region: <span>kdjfkd</span> */}
               </h4>
               <h4>
-                Capital: <span>{newCountry.capital}</span>
+                Capital: <span>{capital ? capital[0] : "NIL"}</span>
                 {/* Capital: <span>dfadfad</span> */}
               </h4>
             </div>
@@ -124,11 +121,13 @@ const SingleCountry = () => {
                 {/* Top Level Domain: <span>kjdkfljd</span> */}
               </h4>
               <h4>
-                Currencies: <span>{stringed_currs}</span>
+                Currencies:{" "}
+                <span>{currencies ? formatCurrencies(currencies) : "NIL"}</span>
                 {/* Currencies: <span>kdjfkadfd</span> */}
               </h4>
               <h4>
-                Languages: <span>{stringed_langs}</span>
+                Languages:{" "}
+                <span>{languages ? formatLangs(languages) : "NIL"}</span>
                 {/* Languages: <span>dfadfadfdfa</span> */}
               </h4>
             </div>
