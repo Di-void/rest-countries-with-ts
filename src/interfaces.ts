@@ -47,12 +47,16 @@ export interface Country {
 // ==========CONTEXT INTERFACE=========
 
 export interface AppContextType {
-  allCountries: Country[];
+  allCountries: Country[] | undefined;
   isLoading: boolean;
   error: { msg: string; status: boolean };
   filterByRegion: (val: Region) => Promise<void>;
   saveOptToLocalStorage: (opt: Region) => void;
   getOptFromLocalStorage: () => Region;
+  findBorderCountries: (codes: string) => Promise<void>;
+  borders: Country[] | undefined;
+  // stringedBorders: string | undefined;
+  // setStringedBorders: React.Dispatch<React.SetStateAction<string | undefined>>;
   // hello: string;
 }
 

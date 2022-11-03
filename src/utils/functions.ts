@@ -39,7 +39,7 @@ type obj = {
   [key: string]: any;
 };
 
-export type route = "all" | "region";
+export type route = "all" | "region" | "borders";
 
 export type paramGeneric = obj[];
 
@@ -125,19 +125,54 @@ export const formatData = <T extends paramGeneric>(
     });
 
     return finalDataSet;
+  } else if (route === "borders") {
+    finalDataSet = newData.map((country, index) => {
+      const {
+        commonName,
+        officialName,
+        nativeName,
+        tld,
+        currencies,
+        region,
+        capital,
+        subregion,
+        languages,
+        borders,
+        population,
+        flags,
+      } = country;
+
+      const id = index;
+      return {
+        id,
+        commonName,
+        officialName,
+        nativeName,
+        tld,
+        currencies,
+        region,
+        capital,
+        subregion,
+        languages,
+        borders,
+        population,
+        flags,
+      };
+    });
+    return finalDataSet;
   }
 
   // PROD
   // * lower bound = 0 - 117 (PROD)
   // * upper bound = 126 - 200(PROD)
-  const lower = randomInteger(0, 117);
-  const upper = randomInteger(126, 202);
+  // const lower = randomInteger(0, 117);
+  // const upper = randomInteger(126, 202);
   // ------------END PROD------------
   // --------DEV------
   // * lower bound = 0 - 9(DEV)
   // * upper bound = 10 - 19(DEV)
-  // const lower = randomInteger(0, 4);
-  // const upper = randomInteger(15, 19);
+  const lower = randomInteger(0, 4);
+  const upper = randomInteger(15, 19);
   // -----------END DEV--------------
   newData = newData.slice(lower, upper);
   newData = _.shuffle(newData);
