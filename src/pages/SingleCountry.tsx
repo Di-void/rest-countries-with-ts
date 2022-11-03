@@ -13,29 +13,34 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Country } from "../interfaces";
+import { mockBorders } from "../utils/MockAll";
 import { useGlobalContext } from "../context";
 
 // OTHER FUNCTIONS AND GLOBALS
-
-const SEARCH_BY_LIST_OF_CODES =
-  "https://restcountries.com/v3.1/alpha?codes={code},{code},{code}";
 
 // ? MAIN COMPONENT
 const SingleCountry = () => {
   // * STATE VALUES AND CONTEXT
   const { id } = useParams();
-  const { allCountries, isLoading } = useGlobalContext();
+  const { allCountries, findBorderCountries, borders } = useGlobalContext();
   let navigate = useNavigate();
 
   // * FUNCTIONS AND SIDE EFFECTS
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  // ! RETs...
+    if (allCountries) {
+      const newCountry = allCountries.find(
+        (country) => country.id.toString() === id
+      ) as Country;
+      const stringedBorderCodes = newCountry.borders?.join();
+      if (stringedBorderCodes) {
+        findBorderCountries(stringedBorderCodes);
+      }
+    }
+  }, [allCountries]);
 
   // ERROR HANDLING
-  if (allCountries.length < 1) {
+  if (!allCountries) {
     return <p>Loading....</p>;
   }
 
@@ -47,14 +52,9 @@ const SingleCountry = () => {
   // console.log(newCountry);
 
   const { languages, currencies, nativeName, population, capital } = newCountry;
-  // languages
 
-  // currencies
-
-  // !TG(TYPE GUARD)
-  // if ("borders" in Country) {
-
-  // }
+  const stringedBorderCodes = newCountry.borders?.join();
+  // ! RETs...
   return (
     <SingleStyles>
       <header>
@@ -139,9 +139,24 @@ const SingleCountry = () => {
             <h3>Border Countries: </h3>
 
             <div className="borders">
-              <div>France</div>
+              {!stringedBorderCodes ? (
+                <p>NO BORDERS...</p>
+              ) : !borders ? (
+                mockBorders.map((obj) => {
+                  return (
+                    <div key={obj.id}>
+                      <Skeleton height="100%" />
+                    </div>
+                  );
+                })
+              ) : (
+                borders.map((country) => {
+                  return <div key={country.id}>{country.commonName}</div>;
+                })
+              )}
+              {/* <div>France</div>
               <div>Germany</div>
-              <div>Netherlands</div>
+              <div>Netherlands</div> */}
             </div>
           </div>
 

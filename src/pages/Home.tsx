@@ -125,7 +125,7 @@ const Home = () => {
           ) : !isLoading && error.status === true ? (
             <p style={{ color: "red" }}>{error.msg}</p>
           ) : (
-            allCountries.map((country) => {
+            allCountries!.map((country) => {
               return (
                 <Link
                   to={`info/${country.id}`}

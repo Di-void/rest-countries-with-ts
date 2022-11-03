@@ -20,14 +20,18 @@ const SEARCH_BY_NAME = "https://restcountries.com/v3.1/name/{name}";
 const SEARCH_BY_FULL_NAME =
   "https://restcountries.com/v3.1/name/{name}?fullText=true";
 const SEARCH_BY_REGION = "https://restcountries.com/v3.1/region";
+const SEARCH_BY_LIST_OF_CODES = "https://restcountries.com/v3.1/alpha?codes=";
 
 // ? MAIN COMPONENT
 const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   // * STATE VALUES
   const [searchQuery, setSearchQuery] = useState("");
-  const [allCountries, setAllCountries] = useState<Country[] | []>([]);
+  const [allCountries, setAllCountries] = useState<Country[] | undefined>();
   const [error, setError] = useState({ msg: "", status: false });
   const [isLoading, setIsLoading] = useState(true);
+  const [borders, setBorders] = useState<Country[] | undefined>();
+  const [stringedBorders, setStringedBorders] = useState<string | undefined>();
+  const [borderLoading, setBorderLoading] = useState(false);
   // * FUNCTIONS AND SIDE EFFECTS
   // REQUESTS TO BE MADE
   /*
@@ -45,8 +49,8 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
       const response = await axios(url);
       const res: paramGeneric = response.data;
       let FRESH_ARR = formatData(res);
-      setIsLoading(false);
       setAllCountries(FRESH_ARR);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -64,7 +68,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   // ? FETCH COUNTRIES BY REGION
   const filterByRegion = async (val: Region) => {
     if (val === "all") {
-      fetchAllCountries(PRODALL_URL);
+      fetchAllCountries(DEVALL_URL);
     } else {
       try {
         setIsLoading(true);
@@ -88,6 +92,31 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
     }
   };
 
+  // ? FIND BORDER COUNTRIES
+  const findBorderCountries = async (codes: string) => {
+    // console.log(codes);
+    // setBorders(codes);
+    try {
+      setBorderLoading(true);
+      const response = await axios(`${SEARCH_BY_LIST_OF_CODES}${codes}`);
+      const res: paramGeneric = response.data;
+      let FRESH_ARR = formatData(res, "borders");
+      setBorders(FRESH_ARR);
+      setBorderLoading(false);
+    } catch (error) {
+      console.log(error);
+      setBorderLoading(false);
+      setError((old) => {
+        let newErr = {
+          ...old,
+          status: true,
+          msg: "Something's wrong.. ☹🙁. Try again later..",
+        };
+        return newErr;
+      });
+    }
+  };
+
   // ? SEARCH FOR A COUNTRY
   const searchForCountries = () => {};
 
@@ -105,7 +134,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchAllCountries(PRODALL_URL);
+    fetchAllCountries(DEVALL_URL);
     saveOptToLocalStorage("all");
   }, []);
   // ! RETs...
@@ -118,6 +147,8 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         filterByRegion,
         saveOptToLocalStorage,
         getOptFromLocalStorage,
+        findBorderCountries,
+        borders,
       }}
     >
       {children}

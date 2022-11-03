@@ -1495,6 +1495,18 @@ export const mockAll = [
   },
 ];
 
+export const mockBorders = [
+  {
+    id: 1,
+  },
+  {
+    id: 2,
+  },
+  {
+    id: 3,
+  },
+];
+
 export interface countryPlaceholder {
   [key: string]: any;
 }
