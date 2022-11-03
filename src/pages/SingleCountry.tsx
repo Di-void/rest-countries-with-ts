@@ -117,7 +117,8 @@ const SingleCountry = () => {
             {/* =========SECOND SUB-INFO=========== */}
             <div className="info_2_2">
               <h4>
-                Top Level Domain: <span>{newCountry.tld[0]}</span>
+                Top Level Domain:{" "}
+                <span>{newCountry.tld ? newCountry.tld[0] : "Nil"}</span>
                 {/* Top Level Domain: <span>kjdkfljd</span> */}
               </h4>
               <h4>

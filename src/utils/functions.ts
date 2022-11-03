@@ -23,6 +23,12 @@ export const formatNativeName = <T extends {}>(obj: T) => {
     let arrayedNativeNames = objValues.map((lang) => {
       return lang.common;
     });
+    arrayedNativeNames = arrayedNativeNames.filter((lang, index, arr) => {
+      if (arr[index + 1] && lang === arr[index + 1]) {
+        return false;
+      }
+      return true;
+    });
     return arrayedNativeNames.join(", ");
   }
 };

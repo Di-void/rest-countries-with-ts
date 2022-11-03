@@ -28,7 +28,7 @@ export interface Country {
         }
       | undefined;
   };
-  tld: string[];
+  tld?: string[];
   currencies?: currencies;
   region: string;
   capital?: string[];
