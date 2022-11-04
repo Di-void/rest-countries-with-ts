@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import SingleStyles from "../components/styled/Single";
+import Button from "../components/styled/Button";
 import { BiArrowBack } from "react-icons/bi";
 import {
   numToString,
@@ -20,7 +21,7 @@ import { useGlobalContext } from "../context";
 const SingleCountry = () => {
   // * STATE VALUES AND CONTEXT
   const { id } = useParams();
-  const { findBorderCountries, borders } = useGlobalContext();
+  const { findBorderCountries, borders, error } = useGlobalContext();
   let navigate = useNavigate();
   const location = useLocation();
   const originArr: Country[] = location.state.arr;
@@ -45,20 +46,41 @@ const SingleCountry = () => {
   }, [originArr]);
 
   // ! RETs...
+
+  if (error.status) {
+    return (
+      <>
+        <p style={{ color: "red" }}>{error.msg}</p>
+        <Button>
+          <button
+            style={{ marginTop: "20px" }}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <BiArrowBack />
+            <span>Go Back Home</span>
+          </button>
+        </Button>
+      </>
+    );
+  }
   return (
     <SingleStyles>
       <header>
         {/* ======BACK BUTTON======== */}
 
-        <button
-          className="back_btn"
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          <BiArrowBack />
-          <span>Back</span>
-        </button>
+        <Button>
+          <button
+            className="back_btn"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <BiArrowBack />
+            <span>Back</span>
+          </button>
+        </Button>
       </header>
 
       {/* ======END BACK BUTTON======= */}
