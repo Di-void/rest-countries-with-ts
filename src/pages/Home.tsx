@@ -14,9 +14,13 @@ const Home = () => {
     allCountries,
     isLoading,
     error,
+    searchError,
     filterByRegion,
     getOptFromLocalStorage,
     saveOptToLocalStorage,
+    handleSearchInputChange,
+    inputVal,
+    setInputVal,
   } = useGlobalContext();
   const [selected, setSelected] = useState<Region>("all");
 
@@ -73,11 +77,20 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputVal(e.target.value);
+    handleSearchInputChange(e.target.value);
+  };
+
   // ! RETs....
 
   if (error.status) {
     return <p style={{ color: "red" }}>Something's wrong.. Try reloading</p>;
   }
+
+  // if (searchError.status) {
+  //   return <p>{searchError.msg}</p>;
+  // }
 
   return (
     <HomePage>
@@ -95,6 +108,8 @@ const Home = () => {
                 id="_search"
                 type="text"
                 placeholder="Search for a country..."
+                value={inputVal}
+                onChange={onSearchInputChange}
               />
             </div>
           </div>
@@ -122,21 +137,25 @@ const Home = () => {
         </header>
 
         <div className="countries">
-          {isLoading && error.status === false
-            ? mockAll.map((country) => {
-                return <CountryCardLoader key={country.id} />;
-              })
-            : allCountries!.map((country) => {
-                return (
-                  <Link
-                    to={`info/${country.commonName}`}
-                    key={country.id}
-                    className="link"
-                  >
-                    <CountryCard country={country} />
-                  </Link>
-                );
-              })}
+          {isLoading && error.status === false ? (
+            mockAll.map((country) => {
+              return <CountryCardLoader key={country.id} />;
+            })
+          ) : !isLoading && searchError.status ? (
+            <p>{searchError.msg}</p>
+          ) : (
+            allCountries!.map((country) => {
+              return (
+                <Link
+                  to={`info/${country.commonName}`}
+                  key={country.id}
+                  className="link"
+                >
+                  <CountryCard country={country} />
+                </Link>
+              );
+            })
+          )}
         </div>
       </div>
     </HomePage>

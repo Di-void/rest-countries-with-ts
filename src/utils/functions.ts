@@ -40,7 +40,7 @@ type obj = {
   [key: string]: any;
 };
 
-export type route = "all" | "region" | "borders" | "single";
+export type route = "all" | "region" | "borders" | "single" | "fullsearch";
 
 export type paramGeneric = obj[];
 
@@ -161,6 +161,45 @@ export const formatData = <T extends paramGeneric>(
       };
     });
     return finalDataSet;
+  } else if (route === "fullsearch") {
+    newData = newData.slice(0, 8);
+
+    // FINAL DATA MAPPING FOR PREDICTABLE ID VALUES
+    finalDataSet = newData.map((country, index) => {
+      const {
+        commonName,
+        officialName,
+        nativeName,
+        tld,
+        currencies,
+        region,
+        capital,
+        subregion,
+        languages,
+        borders,
+        population,
+        flags,
+      } = country;
+
+      const id = index;
+      return {
+        id,
+        commonName,
+        officialName,
+        nativeName,
+        tld,
+        currencies,
+        region,
+        capital,
+        subregion,
+        languages,
+        borders,
+        population,
+        flags,
+      };
+    });
+
+    return finalDataSet;
   }
 
   // PROD
@@ -244,4 +283,20 @@ export const formatLangs = (arg: langs) => {
   let _langs = Object.values(arg) as string[];
   const stringed_langs = _langs.join(", ");
   return stringed_langs;
+};
+
+// ! USER DEFINED TYPE GUARD FOR VALIDATING ERROR TYEPS
+interface searchErr {
+  response: {
+    data: {
+      status: 404;
+      message: string;
+    };
+  };
+}
+
+// export type SearchData = searchErr | Country[];
+
+export const isSearchError = (res: any): res is searchErr => {
+  return res.response !== undefined;
 };

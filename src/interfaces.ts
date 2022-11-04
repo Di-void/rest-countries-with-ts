@@ -61,7 +61,16 @@ export interface AppContextType {
       status: boolean;
     }>
   >;
+  handleSearchInputChange: any;
+  searchError: {
+    msg: string;
+    status: boolean;
+  };
+  inputVal: string;
+  setInputVal: React.Dispatch<React.SetStateAction<string>>;
 }
+
+// COMBINABLE TYPE FOR SEARCH QUERY DATA
 
 // LITERAL TYPE
 export type Region =
