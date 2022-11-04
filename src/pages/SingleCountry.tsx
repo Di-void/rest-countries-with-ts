@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
+import useSWR from "swr";
 import SingleStyles from "../components/styled/Single";
 import { BiArrowBack } from "react-icons/bi";
 import {
@@ -7,12 +7,11 @@ import {
   formatNativeName,
   formatCurrencies,
   formatLangs,
-  paramGeneric,
+  fetchSingleCountry,
 } from "../utils/functions";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Country } from "../interfaces";
 import { mockBorders } from "../utils/MockAll";
 import { useGlobalContext } from "../context";
 
@@ -21,40 +20,37 @@ import { useGlobalContext } from "../context";
 // ? MAIN COMPONENT
 const SingleCountry = () => {
   // * STATE VALUES AND CONTEXT
-  const { id } = useParams();
-  const { allCountries, findBorderCountries, borders } = useGlobalContext();
+  const { fullName } = useParams();
+  const { data, error } = useSWR(
+    `https://restcountries.com/v3.1/name/${fullName}?fullText=true`,
+    fetchSingleCountry
+  );
+  const { findBorderCountries, borders } = useGlobalContext();
   let navigate = useNavigate();
 
   // * FUNCTIONS AND SIDE EFFECTS
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (allCountries) {
-      const newCountry = allCountries.find(
-        (country) => country.id.toString() === id
-      ) as Country;
+    if (data) {
+      const newCountry = data[0];
       const stringedBorderCodes = newCountry.borders?.join();
       if (stringedBorderCodes) {
         findBorderCountries(stringedBorderCodes);
       }
     }
-  }, [allCountries]);
+  }, [data]);
 
-  // ERROR HANDLING
-  if (!allCountries) {
-    return <p>Loading....</p>;
-  }
-
-  // FROM THIS LINE, 'newCountry' CAN NEVER BE UNDEFINED
-  // -- LOGIC LAYER
-  const newCountry = allCountries.find(
-    (country) => country.id.toString() === id
-  ) as Country;
-  // console.log(newCountry);
-
-  const { languages, currencies, nativeName, population, capital } = newCountry;
-
-  const stringedBorderCodes = newCountry.borders?.join();
   // ! RETs...
+
+  if (error) {
+    return <p style={{ color: "red" }}>Failed to Load!</p>;
+  }
+  if (!data) {
+    return <p>Loading...</p>;
+  }
+  const newCountry = data[0];
+  const { languages, currencies, nativeName, population, capital } = newCountry;
+  const stringedBorderCodes = newCountry.borders?.join();
   return (
     <SingleStyles>
       <header>
@@ -152,12 +148,17 @@ const SingleCountry = () => {
                 })
               ) : (
                 borders.map((country) => {
-                  return <div key={country.id}>{country.commonName}</div>;
+                  return (
+                    <Link
+                      to={`/info/${country.commonName}`}
+                      className="border-link"
+                      key={country.id}
+                    >
+                      {country.commonName}
+                    </Link>
+                  );
                 })
               )}
-              {/* <div>France</div>
-              <div>Germany</div>
-              <div>Netherlands</div> */}
             </div>
           </div>
 

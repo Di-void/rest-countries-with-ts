@@ -9,7 +9,7 @@ function App() {
         <Routes>
           <Route path="/" element={<AppLayout />}>
             <Route index element={<Home />} />
-            <Route path="info/:id" element={<SingleCountry />} />
+            <Route path="info/:fullName" element={<SingleCountry />} />
           </Route>
         </Routes>
       </Router>

@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { mockAll } from "../utils/MockAll";
 import { useEffect, useState } from "react";
 import { Region } from "../interfaces";
-import { formatData, paramGeneric } from "../utils/functions";
 
 const Home = () => {
   // * STATE VALUES AND CONTEXT
@@ -128,12 +127,11 @@ const Home = () => {
             allCountries!.map((country) => {
               return (
                 <Link
-                  to={`info/${country.id}`}
+                  to={`info/${country.commonName}`}
                   key={country.id}
                   className="link"
                 >
                   <CountryCard country={country} />
-                  {/* <CountryCardLoader key={country.id} />; */}
                 </Link>
               );
             })

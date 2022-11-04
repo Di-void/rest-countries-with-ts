@@ -1,6 +1,7 @@
 // * [--------ALL HELPERS AND ABSTRACTIONS MUST BE INCLUDED AND DRAWN OUT OF THIS FILE---------------]
 
 // ? NUMBER TO STRING FUNCTION
+import axios from "axios";
 import _ from "lodash";
 import { Country, currencies, langs } from "../interfaces";
 
@@ -39,7 +40,7 @@ type obj = {
   [key: string]: any;
 };
 
-export type route = "all" | "region" | "borders";
+export type route = "all" | "region" | "borders" | "single";
 
 export type paramGeneric = obj[];
 
@@ -125,7 +126,7 @@ export const formatData = <T extends paramGeneric>(
     });
 
     return finalDataSet;
-  } else if (route === "borders") {
+  } else if (route === "borders" || route === "single") {
     finalDataSet = newData.map((country, index) => {
       const {
         commonName,
@@ -214,6 +215,19 @@ export const formatData = <T extends paramGeneric>(
   });
 
   return finalDataSet;
+};
+
+// ? HELPER FOR FETCHING DATA FOR A SINGLE COUNTRY
+export const fetchSingleCountry = async (url: string): Promise<Country[]> => {
+  try {
+    const response = await axios(url);
+    let data = response.data;
+    data = formatData(data, "single") as Country[];
+    // console.log(data);
+    return data;
+  } catch (error) {
+    throw new Error("Fetching Failed!");
+  }
 };
 
 // ? HELPER FOR FORMATTING CURRENCIES
