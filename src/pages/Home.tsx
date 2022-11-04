@@ -6,7 +6,8 @@ import { useGlobalContext } from "../context";
 import { Link } from "react-router-dom";
 import { mockAll } from "../utils/MockAll";
 import { useEffect, useState } from "react";
-import { Region } from "../interfaces";
+import { Country, Region } from "../interfaces";
+import { useNavigate } from "react-router-dom";
 import { formatData, paramGeneric } from "../utils/functions";
 
 const Home = () => {
@@ -20,6 +21,7 @@ const Home = () => {
     saveOptToLocalStorage,
   } = useGlobalContext();
   const [selected, setSelected] = useState<Region>("all");
+  const navigate = useNavigate();
 
   // * LOGIC LAYER
 
@@ -63,6 +65,12 @@ const Home = () => {
     setSelected(e.target.value as Region);
     filterByRegion(newOpt);
     saveOptToLocalStorage(newOpt);
+  };
+
+  // ? HELPER FOR HYPERLINKING AND CHANGING OF ROUTES
+
+  const hangleChangeRoute = (id: number, parentArr: Country[]) => {
+    navigate(`info/${id}`, { state: { arr: parentArr } });
   };
 
   useEffect(() => {
@@ -125,16 +133,16 @@ const Home = () => {
           ) : !isLoading && error.status === true ? (
             <p style={{ color: "red" }}>{error.msg}</p>
           ) : (
-            allCountries!.map((country) => {
+            allCountries!.map((country, _, array) => {
               return (
-                <Link
-                  to={`info/${country.id}`}
+                <button
+                  onClick={() => hangleChangeRoute(country.id, array)}
                   key={country.id}
                   className="link"
                 >
                   <CountryCard country={country} />
                   {/* <CountryCardLoader key={country.id} />; */}
-                </Link>
+                </button>
               );
             })
           )}

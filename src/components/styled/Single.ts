@@ -97,13 +97,19 @@ const SingleStyles = styled.section`
           grid-template-columns: repeat(auto-fill, minmax(min-content, 100px));
           grid-gap: 1em;
           margin-top: 10px;
-          div {
+          button {
+            background-color: transparent;
+            border: transparent;
             box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.1);
             border-radius: 3px;
             padding: 0.35rem 1rem;
             text-align: center;
             text-decoration: none;
             cursor: pointer;
+
+            &:hover {
+              box-shadow: 0px 0px 5px 6px rgba(0, 0, 0, 0.1);
+            }
           }
         }
       }

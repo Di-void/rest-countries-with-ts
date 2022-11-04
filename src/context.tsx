@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import useSWR from "swr";
 import { AppContextType, Country, Region } from "./interfaces";
+
 // import { mockAll } from "./utils/MockAll";
 import { formatData, paramGeneric } from "./utils/functions";
 import axios from "axios";
@@ -32,6 +32,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   const [borders, setBorders] = useState<Country[] | undefined>();
   const [stringedBorders, setStringedBorders] = useState<string | undefined>();
   const [borderLoading, setBorderLoading] = useState(false);
+
   // * FUNCTIONS AND SIDE EFFECTS
   // REQUESTS TO BE MADE
   /*

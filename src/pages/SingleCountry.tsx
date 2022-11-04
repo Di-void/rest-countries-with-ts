@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import SingleStyles from "../components/styled/Single";
 import { BiArrowBack } from "react-icons/bi";
 import {
@@ -7,11 +6,10 @@ import {
   formatNativeName,
   formatCurrencies,
   formatLangs,
-  paramGeneric,
 } from "../utils/functions";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Country } from "../interfaces";
 import { mockBorders } from "../utils/MockAll";
 import { useGlobalContext } from "../context";
@@ -22,38 +20,30 @@ import { useGlobalContext } from "../context";
 const SingleCountry = () => {
   // * STATE VALUES AND CONTEXT
   const { id } = useParams();
-  const { allCountries, findBorderCountries, borders } = useGlobalContext();
+  const { findBorderCountries, borders } = useGlobalContext();
   let navigate = useNavigate();
+  const location = useLocation();
+  const originArr: Country[] = location.state.arr;
+  const newCountry = originArr.find(
+    (country) => country.id.toString() === id
+  ) as Country;
+  const { languages, currencies, nativeName, population, capital } = newCountry;
+  // console.log(newCountry);
+  const stringedBorderCodes = newCountry.borders?.join();
+  // console.log(location.state.arr);
+
+  const hangleChangeRoute = (id: number, parentArr: Country[]) => {
+    navigate(`/info/${id}`, { state: { arr: parentArr } });
+  };
 
   // * FUNCTIONS AND SIDE EFFECTS
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (allCountries) {
-      const newCountry = allCountries.find(
-        (country) => country.id.toString() === id
-      ) as Country;
-      const stringedBorderCodes = newCountry.borders?.join();
-      if (stringedBorderCodes) {
-        findBorderCountries(stringedBorderCodes);
-      }
+    if (stringedBorderCodes) {
+      findBorderCountries(stringedBorderCodes);
     }
-  }, [allCountries]);
+  }, [originArr]);
 
-  // ERROR HANDLING
-  if (!allCountries) {
-    return <p>Loading....</p>;
-  }
-
-  // FROM THIS LINE, 'newCountry' CAN NEVER BE UNDEFINED
-  // -- LOGIC LAYER
-  const newCountry = allCountries.find(
-    (country) => country.id.toString() === id
-  ) as Country;
-  // console.log(newCountry);
-
-  const { languages, currencies, nativeName, population, capital } = newCountry;
-
-  const stringedBorderCodes = newCountry.borders?.join();
   // ! RETs...
   return (
     <SingleStyles>
@@ -140,6 +130,7 @@ const SingleCountry = () => {
             <h3>Border Countries: </h3>
 
             <div className="borders">
+              {/* ============== */}
               {!stringedBorderCodes ? (
                 <p>NO BORDERS...</p>
               ) : !borders ? (
@@ -151,10 +142,19 @@ const SingleCountry = () => {
                   );
                 })
               ) : (
-                borders.map((country) => {
-                  return <div key={country.id}>{country.commonName}</div>;
+                borders.map((country, _, array) => {
+                  return (
+                    <button
+                      key={country.id}
+                      onClick={() => hangleChangeRoute(country.id, array)}
+                    >
+                      {country.commonName}
+                    </button>
+                  );
                 })
               )}
+
+              {/* ============= */}
               {/* <div>France</div>
               <div>Germany</div>
               <div>Netherlands</div> */}
