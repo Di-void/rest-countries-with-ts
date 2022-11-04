@@ -74,6 +74,11 @@ const Home = () => {
   }, []);
 
   // ! RETs....
+
+  if (error.status) {
+    return <p style={{ color: "red" }}>Something's wrong.. Try reloading</p>;
+  }
+
   return (
     <HomePage>
       <div className="_center">
@@ -117,25 +122,21 @@ const Home = () => {
         </header>
 
         <div className="countries">
-          {isLoading && error.status === false ? (
-            mockAll.map((country) => {
-              return <CountryCardLoader key={country.id} />;
-            })
-          ) : !isLoading && error.status === true ? (
-            <p style={{ color: "red" }}>{error.msg}</p>
-          ) : (
-            allCountries!.map((country) => {
-              return (
-                <Link
-                  to={`info/${country.commonName}`}
-                  key={country.id}
-                  className="link"
-                >
-                  <CountryCard country={country} />
-                </Link>
-              );
-            })
-          )}
+          {isLoading && error.status === false
+            ? mockAll.map((country) => {
+                return <CountryCardLoader key={country.id} />;
+              })
+            : allCountries!.map((country) => {
+                return (
+                  <Link
+                    to={`info/${country.commonName}`}
+                    key={country.id}
+                    className="link"
+                  >
+                    <CountryCard country={country} />
+                  </Link>
+                );
+              })}
         </div>
       </div>
     </HomePage>

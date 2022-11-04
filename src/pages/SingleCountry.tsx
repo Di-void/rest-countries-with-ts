@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import useSWR from "swr";
 import SingleStyles from "../components/styled/Single";
+import Button from "../components/styled/Button";
 import { BiArrowBack } from "react-icons/bi";
 import {
   numToString,
@@ -43,7 +44,22 @@ const SingleCountry = () => {
   // ! RETs...
 
   if (error) {
-    return <p style={{ color: "red" }}>Failed to Load!</p>;
+    return (
+      <>
+        <p style={{ color: "red" }}>{error.msg}</p>
+        <Button>
+          <button
+            style={{ marginTop: "20px" }}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <BiArrowBack />
+            <span>Go Back Home</span>
+          </button>
+        </Button>
+      </>
+    );
   }
   if (!data) {
     return <p>Loading...</p>;
