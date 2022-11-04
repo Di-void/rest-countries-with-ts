@@ -3,12 +3,10 @@ import { GoSearch } from "react-icons/go";
 import { CountryCard } from "../components";
 import CountryCardLoader from "../components/loading/CCLoader";
 import { useGlobalContext } from "../context";
-import { Link } from "react-router-dom";
 import { mockAll } from "../utils/MockAll";
 import { useEffect, useState } from "react";
 import { Country, Region } from "../interfaces";
 import { useNavigate } from "react-router-dom";
-import { formatData, paramGeneric } from "../utils/functions";
 
 const Home = () => {
   // * STATE VALUES AND CONTEXT

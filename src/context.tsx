@@ -30,7 +30,6 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   const [error, setError] = useState({ msg: "", status: false });
   const [isLoading, setIsLoading] = useState(true);
   const [borders, setBorders] = useState<Country[] | undefined>();
-  const [stringedBorders, setStringedBorders] = useState<string | undefined>();
 
   // * FUNCTIONS AND SIDE EFFECTS
   // REQUESTS TO BE MADE
