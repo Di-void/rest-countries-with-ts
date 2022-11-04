@@ -26,7 +26,7 @@ const SingleCountry = () => {
     `https://restcountries.com/v3.1/name/${fullName}?fullText=true`,
     fetchSingleCountry
   );
-  const { findBorderCountries, borders } = useGlobalContext();
+  const { findBorderCountries, borders, setError } = useGlobalContext();
   let navigate = useNavigate();
 
   // * FUNCTIONS AND SIDE EFFECTS
@@ -41,12 +41,34 @@ const SingleCountry = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (error) {
+      setError((old) => {
+        let newErr = {
+          ...old,
+          status: true,
+        };
+        return newErr;
+      });
+    } else {
+      setError((old) => {
+        let newErr = {
+          ...old,
+          status: false,
+          msg: "",
+        };
+
+        return newErr;
+      });
+    }
+  }, [error]);
+
   // ! RETs...
 
   if (error) {
     return (
       <>
-        <p style={{ color: "red" }}>{error.msg}</p>
+        <p style={{ color: "red" }}>Failed to Load...</p>
         <Button>
           <button
             style={{ marginTop: "20px" }}

@@ -30,7 +30,6 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   const [error, setError] = useState({ msg: "", status: false });
   const [isLoading, setIsLoading] = useState(true);
   const [borders, setBorders] = useState<Country[] | undefined>();
-  const [borderLoading, setBorderLoading] = useState(false);
   // * FUNCTIONS AND SIDE EFFECTS
   // REQUESTS TO BE MADE
   /*
@@ -96,15 +95,12 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
     // console.log(codes);
     // setBorders(codes);
     try {
-      setBorderLoading(true);
       const response = await axios(`${SEARCH_BY_LIST_OF_CODES}${codes}`);
       const res: paramGeneric = response.data;
       let FRESH_ARR = formatData(res, "borders");
       setBorders(FRESH_ARR);
-      setBorderLoading(false);
     } catch (error) {
       console.log(error);
-      setBorderLoading(false);
       setError((old) => {
         let newErr = {
           ...old,
@@ -148,6 +144,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         getOptFromLocalStorage,
         findBorderCountries,
         borders,
+        setError,
       }}
     >
       {children}
