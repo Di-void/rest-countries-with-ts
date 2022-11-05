@@ -29,9 +29,7 @@ const SingleCountry = () => {
     (country) => country.id.toString() === id
   ) as Country;
   const { languages, currencies, nativeName, population, capital } = newCountry;
-  // console.log(newCountry);
   const stringedBorderCodes = newCountry.borders?.join();
-  // console.log(location.state.arr);
 
   const hangleChangeRoute = (id: number, parentArr: Country[]) => {
     navigate(`/info/${id}`, { state: { arr: parentArr } });

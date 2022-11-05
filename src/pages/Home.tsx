@@ -17,6 +17,10 @@ const Home = () => {
     filterByRegion,
     getOptFromLocalStorage,
     saveOptToLocalStorage,
+    inputVal,
+    setInputVal,
+    handleSearchInputChange,
+    searchError,
   } = useGlobalContext();
   const [selected, setSelected] = useState<Region>("all");
   const navigate = useNavigate();
@@ -71,6 +75,11 @@ const Home = () => {
     navigate(`info/${id}`, { state: { arr: parentArr } });
   };
 
+  const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputVal(e.target.value);
+    handleSearchInputChange(e.target.value);
+  };
+
   useEffect(() => {
     const Region = getOptFromLocalStorage();
     setSelected(Region);
@@ -100,7 +109,9 @@ const Home = () => {
               <input
                 id="_search"
                 type="text"
+                value={inputVal}
                 placeholder="Search for a country..."
+                onChange={onSearchInputChange}
               />
             </div>
           </div>
@@ -128,22 +139,26 @@ const Home = () => {
         </header>
 
         <div className="countries">
-          {isLoading && error.status === false
-            ? mockAll.map((country) => {
-                return <CountryCardLoader key={country.id} />;
-              })
-            : allCountries!.map((country, _, array) => {
-                return (
-                  <button
-                    onClick={() => hangleChangeRoute(country.id, array)}
-                    key={country.id}
-                    className="link"
-                  >
-                    <CountryCard country={country} />
-                    {/* <CountryCardLoader key={country.id} />; */}
-                  </button>
-                );
-              })}
+          {isLoading && error.status === false ? (
+            mockAll.map((country) => {
+              return <CountryCardLoader key={country.id} />;
+            })
+          ) : !isLoading && searchError.status ? (
+            <p>{searchError.msg}</p>
+          ) : (
+            allCountries!.map((country, _, array) => {
+              return (
+                <button
+                  onClick={() => hangleChangeRoute(country.id, array)}
+                  key={country.id}
+                  className="link"
+                >
+                  <CountryCard country={country} />
+                  {/* <CountryCardLoader key={country.id} />; */}
+                </button>
+              );
+            })
+          )}
         </div>
       </div>
     </HomePage>
