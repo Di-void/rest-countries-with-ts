@@ -300,3 +300,16 @@ interface searchErr {
 export const isSearchError = (res: any): res is searchErr => {
   return res.response !== undefined;
 };
+
+// ? CACHE COUNTRIES TO LOCAL STORAGE
+export const cacheCountries = (payload: Country[]) => {
+  localStorage.setItem("c-loaded", JSON.stringify(payload));
+};
+
+// ? GET CACHED COUNTRIES
+export const getCachedCountries = () => {
+  const localCountries: Country[] = localStorage.getItem("c-loaded")
+    ? JSON.parse(localStorage.getItem("c-loaded")!)
+    : [];
+  return localCountries;
+};
