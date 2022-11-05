@@ -1,7 +1,13 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import { AppContextType, Country, Region } from "./interfaces";
 import { debounce } from "lodash";
-import { formatData, isSearchError, paramGeneric } from "./utils/functions";
+import {
+  cacheCountries,
+  formatData,
+  getCachedCountries,
+  isSearchError,
+  paramGeneric,
+} from "./utils/functions";
 import axios from "axios";
 
 const AppContext = React.createContext<AppContextType | null>(null);
@@ -31,14 +37,6 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   const [borders, setBorders] = useState<Country[] | undefined>();
 
   // * FUNCTIONS AND SIDE EFFECTS
-  // REQUESTS TO BE MADE
-  /*
-  - on initial load we query the all endpoint
-  - on change of region we query the region endpoint with the region passed to the url enpoint
-  - on search we query the name/fullName endpoint
-  - on click of each country card, we land on the single country page and determine if there is a borders array existing on it's object.
-  - If there is, we extract the values from it an query the list of codes enpoint
-*/
 
   // ? FETCH ALL COUNTRIES
   const fetchAllCountries = async (url: string) => {
@@ -47,10 +45,10 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
       const response = await axios(url);
       const res: paramGeneric = response.data;
       let FRESH_ARR = formatData(res);
+      cacheCountries(FRESH_ARR);
       setAllCountries(FRESH_ARR);
       setIsLoading(false);
     } catch (error) {
-      // console.log(error);
       setIsLoading(false);
       setError((old) => {
         let newErr = {
@@ -97,8 +95,6 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
 
   // ? FIND BORDER COUNTRIES
   const findBorderCountries = async (codes: string) => {
-    // console.log(codes);
-    // setBorders(codes);
     try {
       const response = await axios(`${SEARCH_BY_LIST_OF_CODES}${codes}`);
       const res: paramGeneric = response.data;
@@ -137,8 +133,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         let newMsg = { ...oldMsg, status: false, msg: "" };
         return newMsg;
       });
-    } catch (error: unknown) {
-      // console.log(error.response);
+    } catch (error) {
       if (isSearchError(error)) {
         setSearchError((oldMsg) => {
           let newMsg = {
@@ -149,9 +144,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
           return newMsg;
         });
         setIsLoading(false);
-        // console.log("It's a search error");
       } else {
-        // console.log("It is not a search error");
         setError((old) => {
           let newErr = {
             ...old,
@@ -179,17 +172,17 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
+    fetchAllCountries(DEVALL_URL);
     saveOptToLocalStorage("all");
   }, []);
 
   useEffect(() => {
-    // console.log(searchQuery);
     if (searchQuery === "" || inputVal === "") {
       setSearchError((oldMsg) => {
         let newMsg = { ...oldMsg, status: false, msg: "" };
         return newMsg;
       });
-      fetchAllCountries(DEVALL_URL);
+      setAllCountries(getCachedCountries);
       return;
     }
 
@@ -217,8 +210,6 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
     </AppContext.Provider>
   );
 };
-
-// allCountries[0].name.nativeName.eng?.common
 
 // custom hook
 

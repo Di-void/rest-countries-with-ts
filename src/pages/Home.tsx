@@ -154,7 +154,6 @@ const Home = () => {
                   className="link"
                 >
                   <CountryCard country={country} />
-                  {/* <CountryCardLoader key={country.id} />; */}
                 </button>
               );
             })
