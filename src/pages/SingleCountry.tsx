@@ -87,7 +87,6 @@ const SingleCountry = () => {
         {/* ========FLAG IMAGE======== */}
         <div className="flag">
           <img src={newCountry.flags.png} alt="flag-image" />
-          {/* <img src="https://via.placeholder.com/600x400.png" alt="flag-image" /> */}
         </div>
         {/* =======END FLAG IMAGE======= */}
 
@@ -95,7 +94,6 @@ const SingleCountry = () => {
         <div className="info">
           <div className="title">
             <h2>{newCountry.commonName}</h2>
-            {/* <h2>dkfjakdfj</h2> */}
           </div>
 
           <div className="info_2">
@@ -103,23 +101,18 @@ const SingleCountry = () => {
             <div className="info_2_1">
               <h4>
                 Native Name: <span>{formatNativeName(nativeName)}</span>
-                {/* Native Name: <span>Bkfk</span> */}
               </h4>
               <h4>
                 Population: <span>{numToString(population)}</span>
-                {/* Population: <span>ldkfalkdf</span> */}
               </h4>
               <h4>
                 Region: <span>{newCountry.region}</span>
-                {/* Region: <span>dfkadlfjldkj</span> */}
               </h4>
               <h4>
                 Sub Region: <span>{newCountry.subregion}</span>
-                {/* Sub Region: <span>kdjfkd</span> */}
               </h4>
               <h4>
                 Capital: <span>{capital ? capital[0] : "NIL"}</span>
-                {/* Capital: <span>dfadfad</span> */}
               </h4>
             </div>
             {/* ========END FIRST SUB-INFO=========== */}
@@ -129,17 +122,14 @@ const SingleCountry = () => {
               <h4>
                 Top Level Domain:{" "}
                 <span>{newCountry.tld ? newCountry.tld[0] : "Nil"}</span>
-                {/* Top Level Domain: <span>kjdkfljd</span> */}
               </h4>
               <h4>
                 Currencies:{" "}
                 <span>{currencies ? formatCurrencies(currencies) : "NIL"}</span>
-                {/* Currencies: <span>kdjfkadfd</span> */}
               </h4>
               <h4>
                 Languages:{" "}
                 <span>{languages ? formatLangs(languages) : "NIL"}</span>
-                {/* Languages: <span>dfadfadfdfa</span> */}
               </h4>
             </div>
 
@@ -175,9 +165,6 @@ const SingleCountry = () => {
               )}
 
               {/* ============= */}
-              {/* <div>France</div>
-              <div>Germany</div>
-              <div>Netherlands</div> */}
             </div>
           </div>
 
