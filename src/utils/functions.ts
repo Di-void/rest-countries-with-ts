@@ -295,8 +295,6 @@ interface searchErr {
   };
 }
 
-// export type SearchData = searchErr | Country[];
-
 export const isSearchError = (res: any): res is searchErr => {
   return res.response !== undefined;
 };
