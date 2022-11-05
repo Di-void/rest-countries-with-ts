@@ -68,6 +68,11 @@ const Home = () => {
     saveOptToLocalStorage(newOpt);
   };
 
+  const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputVal(e.target.value);
+    handleSearchInputChange(e.target.value);
+  };
+
   useEffect(() => {
     const Region = getOptFromLocalStorage();
     setSelected(Region);
@@ -77,20 +82,11 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputVal(e.target.value);
-    handleSearchInputChange(e.target.value);
-  };
-
   // ! RETs....
 
   if (error.status) {
     return <p style={{ color: "red" }}>Something's wrong.. Try reloading</p>;
   }
-
-  // if (searchError.status) {
-  //   return <p>{searchError.msg}</p>;
-  // }
 
   return (
     <HomePage>

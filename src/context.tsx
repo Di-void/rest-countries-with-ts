@@ -67,6 +67,11 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
 
   // ? FETCH COUNTRIES BY REGION
   const filterByRegion = async (val: Region) => {
+    setInputVal("");
+    setSearchError((oldMsg) => {
+      let newMsg = { ...oldMsg, status: false, msg: "" };
+      return newMsg;
+    });
     if (val === "all") {
       fetchAllCountries(DEVALL_URL);
     } else {
