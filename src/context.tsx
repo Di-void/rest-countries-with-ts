@@ -1,8 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
-import useSWR from "swr";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import { AppContextType, Country, Region } from "./interfaces";
-// import { mockAll } from "./utils/MockAll";
-import { formatData, paramGeneric } from "./utils/functions";
+import { debounce } from "lodash";
+import {
+  cacheCountries,
+  formatData,
+  getCachedCountries,
+  isSearchError,
+  paramGeneric,
+} from "./utils/functions";
 import axios from "axios";
 
 const AppContext = React.createContext<AppContextType | null>(null);
@@ -16,9 +21,7 @@ interface ProviderProps {
 
 const DEVALL_URL = "http://localhost:3000/all";
 const PRODALL_URL = "https://restcountries.com/v3.1/all";
-const SEARCH_BY_NAME = "https://restcountries.com/v3.1/name/{name}";
-const SEARCH_BY_FULL_NAME =
-  "https://restcountries.com/v3.1/name/{name}?fullText=true";
+const SEARCH_BY_NAME = "https://restcountries.com/v3.1/name/";
 const SEARCH_BY_REGION = "https://restcountries.com/v3.1/region";
 const SEARCH_BY_LIST_OF_CODES = "https://restcountries.com/v3.1/alpha?codes=";
 
@@ -26,21 +29,14 @@ const SEARCH_BY_LIST_OF_CODES = "https://restcountries.com/v3.1/alpha?codes=";
 const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   // * STATE VALUES
   const [searchQuery, setSearchQuery] = useState("");
+  const [inputVal, setInputVal] = useState("");
   const [allCountries, setAllCountries] = useState<Country[] | undefined>();
   const [error, setError] = useState({ msg: "", status: false });
+  const [searchError, setSearchError] = useState({ msg: "", status: false });
   const [isLoading, setIsLoading] = useState(true);
   const [borders, setBorders] = useState<Country[] | undefined>();
-  const [stringedBorders, setStringedBorders] = useState<string | undefined>();
-  const [borderLoading, setBorderLoading] = useState(false);
+
   // * FUNCTIONS AND SIDE EFFECTS
-  // REQUESTS TO BE MADE
-  /*
-  - on initial load we query the all endpoint
-  - on change of region we query the region endpoint with the region passed to the url enpoint
-  - on search we query the name/fullName endpoint
-  - on click of each country card, we land on the single country page and determine if there is a borders array existing on it's object.
-  - If there is, we extract the values from it an query the list of codes enpoint
-*/
 
   // ? FETCH ALL COUNTRIES
   const fetchAllCountries = async (url: string) => {
@@ -49,10 +45,10 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
       const response = await axios(url);
       const res: paramGeneric = response.data;
       let FRESH_ARR = formatData(res);
+      cacheCountries(FRESH_ARR);
       setAllCountries(FRESH_ARR);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
       setError((old) => {
         let newErr = {
@@ -67,6 +63,11 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
 
   // ? FETCH COUNTRIES BY REGION
   const filterByRegion = async (val: Region) => {
+    setInputVal("");
+    setSearchError((oldMsg) => {
+      let newMsg = { ...oldMsg, status: false, msg: "" };
+      return newMsg;
+    });
     if (val === "all") {
       fetchAllCountries(DEVALL_URL);
     } else {
@@ -94,31 +95,68 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
 
   // ? FIND BORDER COUNTRIES
   const findBorderCountries = async (codes: string) => {
-    // console.log(codes);
-    // setBorders(codes);
     try {
-      setBorderLoading(true);
       const response = await axios(`${SEARCH_BY_LIST_OF_CODES}${codes}`);
       const res: paramGeneric = response.data;
       let FRESH_ARR = formatData(res, "borders");
       setBorders(FRESH_ARR);
-      setBorderLoading(false);
     } catch (error) {
       console.log(error);
-      setBorderLoading(false);
       setError((old) => {
         let newErr = {
           ...old,
           status: true,
-          msg: "Something's wrong.. ☹🙁. Try again later..",
+          msg: "Something's wrong.. ☹🙁...",
         };
         return newErr;
       });
     }
   };
 
+  const handleSearchInputChange = useCallback(
+    debounce((val: string) => {
+      setSearchQuery(val);
+    }, 500),
+    []
+  );
+
   // ? SEARCH FOR A COUNTRY
-  const searchForCountries = () => {};
+  const searchForCountries = async (query: string) => {
+    try {
+      setIsLoading(true);
+      const response = await axios(`${SEARCH_BY_NAME}${query}`);
+      const data = response.data;
+      const FRESH_ARR = formatData(data, "fullsearch");
+      setAllCountries(FRESH_ARR);
+      setIsLoading(false);
+      setSearchError((oldMsg) => {
+        let newMsg = { ...oldMsg, status: false, msg: "" };
+        return newMsg;
+      });
+    } catch (error) {
+      if (isSearchError(error)) {
+        setSearchError((oldMsg) => {
+          let newMsg = {
+            ...oldMsg,
+            status: true,
+            msg: "Country not found",
+          };
+          return newMsg;
+        });
+        setIsLoading(false);
+      } else {
+        setError((old) => {
+          let newErr = {
+            ...old,
+            status: true,
+            msg: "Oops!. An error occured!!. Try reloading..",
+          };
+          return newErr;
+        });
+        setIsLoading(false);
+      }
+    }
+  };
 
   // SAVE SELECTED OPTION TO LOCAL STORAGE
   const saveOptToLocalStorage = (opt: Region) => {
@@ -137,6 +175,19 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
     fetchAllCountries(DEVALL_URL);
     saveOptToLocalStorage("all");
   }, []);
+
+  useEffect(() => {
+    if (searchQuery === "" || inputVal === "") {
+      setSearchError((oldMsg) => {
+        let newMsg = { ...oldMsg, status: false, msg: "" };
+        return newMsg;
+      });
+      setAllCountries(getCachedCountries);
+      return;
+    }
+
+    searchForCountries(searchQuery);
+  }, [searchQuery]);
   // ! RETs...
   return (
     <AppContext.Provider
@@ -149,14 +200,16 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         getOptFromLocalStorage,
         findBorderCountries,
         borders,
+        inputVal,
+        searchError,
+        setInputVal,
+        handleSearchInputChange,
       }}
     >
       {children}
     </AppContext.Provider>
   );
 };
-
-// allCountries[0].name.nativeName.eng?.common
 
 // custom hook
 

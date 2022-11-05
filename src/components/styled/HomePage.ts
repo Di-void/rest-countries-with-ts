@@ -81,14 +81,15 @@ const HomePage = styled.main`
       padding: 1.2rem 1.4rem;
       margin-top: 30px;
       display: grid;
-      grid-template-rows: repeat(8, 350px);
+      grid-template-rows: repeat(8, 370px);
       grid-row-gap: 1.5em;
 
       /* =========LINK=========== */
       .link {
-        display: block;
-        text-decoration: none;
+        background: transparent;
+        border: transparent;
         overflow: hidden;
+        /* border: 1px solid black; */
         border-radius: 7px;
         box-shadow: 0px 4px 21px -4px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease-in-out;
@@ -100,7 +101,7 @@ const HomePage = styled.main`
         /* =====IMAGE BOX====== */
         .img {
           width: 100%;
-          height: 55%;
+          height: 57%;
           img {
             width: 100%;
             height: 100%;
@@ -110,15 +111,17 @@ const HomePage = styled.main`
 
         /* ========INFO BOX========== */
         .info {
+          height: 45%;
           padding: 0.75rem;
           color: black;
 
           header {
-            //
+            text-align: left;
           }
 
           .metrics {
             margin-top: 15px;
+            text-align: left;
             h5 {
               font-size: 14px;
               font-weight: 600;

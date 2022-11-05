@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import SingleStyles from "../components/styled/Single";
+import Button from "../components/styled/Button";
 import { BiArrowBack } from "react-icons/bi";
 import {
   numToString,
   formatNativeName,
   formatCurrencies,
   formatLangs,
-  paramGeneric,
 } from "../utils/functions";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Country } from "../interfaces";
 import { mockBorders } from "../utils/MockAll";
 import { useGlobalContext } from "../context";
@@ -22,53 +21,64 @@ import { useGlobalContext } from "../context";
 const SingleCountry = () => {
   // * STATE VALUES AND CONTEXT
   const { id } = useParams();
-  const { allCountries, findBorderCountries, borders } = useGlobalContext();
+  const { findBorderCountries, borders, error } = useGlobalContext();
   let navigate = useNavigate();
+  const location = useLocation();
+  const originArr: Country[] = location.state.arr;
+  const newCountry = originArr.find(
+    (country) => country.id.toString() === id
+  ) as Country;
+  const { languages, currencies, nativeName, population, capital } = newCountry;
+  const stringedBorderCodes = newCountry.borders?.join();
+
+  const hangleChangeRoute = (id: number, parentArr: Country[]) => {
+    navigate(`/info/${id}`, { state: { arr: parentArr } });
+  };
 
   // * FUNCTIONS AND SIDE EFFECTS
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (allCountries) {
-      const newCountry = allCountries.find(
-        (country) => country.id.toString() === id
-      ) as Country;
-      const stringedBorderCodes = newCountry.borders?.join();
-      if (stringedBorderCodes) {
-        findBorderCountries(stringedBorderCodes);
-      }
+    if (stringedBorderCodes) {
+      findBorderCountries(stringedBorderCodes);
     }
-  }, [allCountries]);
+  }, [originArr]);
 
-  // ERROR HANDLING
-  if (!allCountries) {
-    return <p>Loading....</p>;
-  }
-
-  // FROM THIS LINE, 'newCountry' CAN NEVER BE UNDEFINED
-  // -- LOGIC LAYER
-  const newCountry = allCountries.find(
-    (country) => country.id.toString() === id
-  ) as Country;
-  // console.log(newCountry);
-
-  const { languages, currencies, nativeName, population, capital } = newCountry;
-
-  const stringedBorderCodes = newCountry.borders?.join();
   // ! RETs...
+
+  if (error.status) {
+    return (
+      <>
+        <p style={{ color: "red" }}>{error.msg}</p>
+        <Button>
+          <button
+            style={{ marginTop: "20px" }}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <BiArrowBack />
+            <span>Go Back Home</span>
+          </button>
+        </Button>
+      </>
+    );
+  }
   return (
     <SingleStyles>
       <header>
         {/* ======BACK BUTTON======== */}
 
-        <button
-          className="back_btn"
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          <BiArrowBack />
-          <span>Back</span>
-        </button>
+        <Button>
+          <button
+            className="back_btn"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <BiArrowBack />
+            <span>Back</span>
+          </button>
+        </Button>
       </header>
 
       {/* ======END BACK BUTTON======= */}
@@ -77,7 +87,6 @@ const SingleCountry = () => {
         {/* ========FLAG IMAGE======== */}
         <div className="flag">
           <img src={newCountry.flags.png} alt="flag-image" />
-          {/* <img src="https://via.placeholder.com/600x400.png" alt="flag-image" /> */}
         </div>
         {/* =======END FLAG IMAGE======= */}
 
@@ -85,7 +94,6 @@ const SingleCountry = () => {
         <div className="info">
           <div className="title">
             <h2>{newCountry.commonName}</h2>
-            {/* <h2>dkfjakdfj</h2> */}
           </div>
 
           <div className="info_2">
@@ -93,23 +101,18 @@ const SingleCountry = () => {
             <div className="info_2_1">
               <h4>
                 Native Name: <span>{formatNativeName(nativeName)}</span>
-                {/* Native Name: <span>Bkfk</span> */}
               </h4>
               <h4>
                 Population: <span>{numToString(population)}</span>
-                {/* Population: <span>ldkfalkdf</span> */}
               </h4>
               <h4>
                 Region: <span>{newCountry.region}</span>
-                {/* Region: <span>dfkadlfjldkj</span> */}
               </h4>
               <h4>
                 Sub Region: <span>{newCountry.subregion}</span>
-                {/* Sub Region: <span>kdjfkd</span> */}
               </h4>
               <h4>
                 Capital: <span>{capital ? capital[0] : "NIL"}</span>
-                {/* Capital: <span>dfadfad</span> */}
               </h4>
             </div>
             {/* ========END FIRST SUB-INFO=========== */}
@@ -119,17 +122,14 @@ const SingleCountry = () => {
               <h4>
                 Top Level Domain:{" "}
                 <span>{newCountry.tld ? newCountry.tld[0] : "Nil"}</span>
-                {/* Top Level Domain: <span>kjdkfljd</span> */}
               </h4>
               <h4>
                 Currencies:{" "}
                 <span>{currencies ? formatCurrencies(currencies) : "NIL"}</span>
-                {/* Currencies: <span>kdjfkadfd</span> */}
               </h4>
               <h4>
                 Languages:{" "}
                 <span>{languages ? formatLangs(languages) : "NIL"}</span>
-                {/* Languages: <span>dfadfadfdfa</span> */}
               </h4>
             </div>
 
@@ -140,6 +140,7 @@ const SingleCountry = () => {
             <h3>Border Countries: </h3>
 
             <div className="borders">
+              {/* ============== */}
               {!stringedBorderCodes ? (
                 <p>NO BORDERS...</p>
               ) : !borders ? (
@@ -151,13 +152,19 @@ const SingleCountry = () => {
                   );
                 })
               ) : (
-                borders.map((country) => {
-                  return <div key={country.id}>{country.commonName}</div>;
+                borders.map((country, _, array) => {
+                  return (
+                    <button
+                      key={country.id}
+                      onClick={() => hangleChangeRoute(country.id, array)}
+                    >
+                      {country.commonName}
+                    </button>
+                  );
                 })
               )}
-              {/* <div>France</div>
-              <div>Germany</div>
-              <div>Netherlands</div> */}
+
+              {/* ============= */}
             </div>
           </div>
 
