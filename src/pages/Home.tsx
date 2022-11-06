@@ -92,7 +92,7 @@ const Home = () => {
   // ! RETs....
 
   if (error.status) {
-    return <p style={{ color: "red" }}>Something's wrong.. Try reloading</p>;
+    return <p style={{ color: "red" }}>{error.msg}</p>;
   }
   return (
     <HomePage>

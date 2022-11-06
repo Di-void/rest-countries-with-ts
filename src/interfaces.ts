@@ -62,6 +62,10 @@ export interface AppContextType {
     status: boolean;
   };
   setInputVal: React.Dispatch<React.SetStateAction<string>>;
+  borderError: {
+    msg: string;
+    status: boolean;
+  };
 }
 
 // LITERAL TYPE

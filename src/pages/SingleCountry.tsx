@@ -17,7 +17,8 @@ import { useGlobalContext } from "../context";
 const SingleCountry = () => {
   // * STATE VALUES AND CONTEXT
   const { id } = useParams();
-  const { findBorderCountries, borders, error } = useGlobalContext();
+  const { findBorderCountries, borders, error, borderError } =
+    useGlobalContext();
   let navigate = useNavigate();
   const location = useLocation();
 
@@ -167,6 +168,10 @@ const SingleCountry = () => {
               {/* ============== */}
               {!stringedBorderCodes ? (
                 <p>NO BORDERS...</p>
+              ) : borderError.status ? (
+                <p style={{ color: "red", fontSize: "15px" }}>
+                  {borderError.msg}
+                </p>
               ) : !borders ? (
                 mockBorders.map((obj) => {
                   return (
