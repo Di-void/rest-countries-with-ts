@@ -75,7 +75,6 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         setIsLoading(false);
         setAllCountries(FRESH_ARR);
       } catch (error) {
-        console.log(error);
         setIsLoading(false);
         setError((old) => {
           let newErr = {
@@ -98,7 +97,6 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
       let FRESH_ARR = Formatters.formatData(res, "borders");
       setBorders(FRESH_ARR);
     } catch (error) {
-      console.log(error);
       setError((old) => {
         let newErr = {
           ...old,
