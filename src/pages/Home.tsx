@@ -92,7 +92,7 @@ const Home = () => {
   // ! RETs....
 
   if (error.status) {
-    return <p style={{ color: "red" }}>{error.msg}</p>;
+    return <p className="all-error">{error.msg}</p>;
   }
   return (
     <HomePage>
@@ -144,7 +144,7 @@ const Home = () => {
               return <CountryCardLoader key={country.id} />;
             })
           ) : !isLoading && searchError.status ? (
-            <p>{searchError.msg}</p>
+            <p className="all-error">{searchError.msg}</p>
           ) : (
             allCountries!.map((country, _, array) => {
               return (

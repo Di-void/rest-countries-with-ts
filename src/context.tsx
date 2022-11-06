@@ -135,7 +135,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
           let newMsg = {
             ...oldMsg,
             status: true,
-            msg: "Country not found",
+            msg: "Uh Oh, Country Not Found",
           };
           return newMsg;
         });

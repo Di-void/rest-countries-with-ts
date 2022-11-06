@@ -80,9 +80,6 @@ export namespace Functions {
           flags,
         } = country;
 
-        // const id = Math.random().toString(36).substring(2, 7);
-        // const id = index;
-
         return {
           commonName,
           officialName,
@@ -223,8 +220,8 @@ export namespace Functions {
       // PROD
       // * lower bound = 0 - 117 (PROD)
       // * upper bound = 126 - 200(PROD)
-      // const lower = randomInteger(0, 117);
-      // const upper = randomInteger(126, 202);
+      // const lower = GenAndHelpers.randomInteger(0, 117);
+      // const upper = GenAndHelpers.randomInteger(126, 202);
       // ------------END PROD------------
       // --------DEV------
       // * lower bound = 0 - 9(DEV)

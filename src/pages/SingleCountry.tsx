@@ -27,7 +27,7 @@ const SingleCountry = () => {
   if (!location.state) {
     return (
       <>
-        <p style={{ color: "red" }}>Failed to load!</p>
+        <p className="all-error">Failed to load!</p>
         <Button>
           <button
             style={{ marginTop: "20px" }}
@@ -67,7 +67,7 @@ const SingleCountry = () => {
   if (error.status) {
     return (
       <>
-        <p style={{ color: "red" }}>{error.msg}</p>
+        <p className="all-error">{error.msg}</p>
         <Button>
           <button
             style={{ marginTop: "20px" }}
@@ -169,9 +169,7 @@ const SingleCountry = () => {
               {!stringedBorderCodes ? (
                 <p>NO BORDERS...</p>
               ) : borderError.status ? (
-                <p style={{ color: "red", fontSize: "15px" }}>
-                  {borderError.msg}
-                </p>
+                <p className="all-error">{borderError.msg}</p>
               ) : !borders ? (
                 mockBorders.map((obj) => {
                   return (
