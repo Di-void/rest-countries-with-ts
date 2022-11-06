@@ -3,11 +3,10 @@ import { GoSearch } from "react-icons/go";
 import { CountryCard } from "../components";
 import CountryCardLoader from "../components/loading/CCLoader";
 import { useGlobalContext } from "../context";
-import { Link } from "react-router-dom";
 import { mockAll } from "../utils/MockAll";
 import { useEffect, useState } from "react";
-import { Region } from "../interfaces";
-import { formatData, paramGeneric } from "../utils/functions";
+import { Country, Region } from "../interfaces";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   // * STATE VALUES AND CONTEXT
@@ -18,8 +17,13 @@ const Home = () => {
     filterByRegion,
     getOptFromLocalStorage,
     saveOptToLocalStorage,
+    inputVal,
+    setInputVal,
+    handleSearchInputChange,
+    searchError,
   } = useGlobalContext();
   const [selected, setSelected] = useState<Region>("all");
+  const navigate = useNavigate();
 
   // * LOGIC LAYER
 
@@ -65,6 +69,17 @@ const Home = () => {
     saveOptToLocalStorage(newOpt);
   };
 
+  // ? HELPER FOR HYPERLINKING AND CHANGING OF ROUTES
+
+  const hangleChangeRoute = (id: number, parentArr: Country[]) => {
+    navigate(`info/${id}`, { state: { arr: parentArr } });
+  };
+
+  const onSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputVal(e.target.value);
+    handleSearchInputChange(e.target.value);
+  };
+
   useEffect(() => {
     const Region = getOptFromLocalStorage();
     setSelected(Region);
@@ -75,6 +90,10 @@ const Home = () => {
   }, []);
 
   // ! RETs....
+
+  if (error.status) {
+    return <p className="all-error">{error.msg}</p>;
+  }
   return (
     <HomePage>
       <div className="_center">
@@ -90,7 +109,9 @@ const Home = () => {
               <input
                 id="_search"
                 type="text"
+                value={inputVal}
                 placeholder="Search for a country..."
+                onChange={onSearchInputChange}
               />
             </div>
           </div>
@@ -122,19 +143,18 @@ const Home = () => {
             mockAll.map((country) => {
               return <CountryCardLoader key={country.id} />;
             })
-          ) : !isLoading && error.status === true ? (
-            <p style={{ color: "red" }}>{error.msg}</p>
+          ) : !isLoading && searchError.status ? (
+            <p className="all-error">{searchError.msg}</p>
           ) : (
-            allCountries!.map((country) => {
+            allCountries!.map((country, _, array) => {
               return (
-                <Link
-                  to={`info/${country.id}`}
+                <button
+                  onClick={() => hangleChangeRoute(country.id, array)}
                   key={country.id}
                   className="link"
                 >
                   <CountryCard country={country} />
-                  {/* <CountryCardLoader key={country.id} />; */}
-                </Link>
+                </button>
               );
             })
           )}

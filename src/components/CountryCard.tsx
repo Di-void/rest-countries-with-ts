@@ -1,5 +1,5 @@
 import { Country } from "../interfaces";
-import { numToString } from "../utils/functions";
+import { Functions } from "../utils/functions";
 
 // TYPES AND INTERFACES
 
@@ -33,7 +33,8 @@ const CountryCard: React.FC<Props> = ({ country }) => {
 
         <div className="metrics">
           <h5>
-            Population: <span>{numToString(population)}</span>
+            Population:{" "}
+            <span>{Functions.GenAndHelpers.numToString(population)}</span>
           </h5>
           <h5>
             Region: <span>{region}</span>

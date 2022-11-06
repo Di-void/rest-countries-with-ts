@@ -28,3 +28,8 @@
   --clr-Txt: hsl(0, 0%, 100%);
   --clr-Elems: hsl(209, 23%, 22%);
 }
+
+.all-error {
+  color: red;
+  font-size: 15px;
+}

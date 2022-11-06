@@ -55,9 +55,17 @@ export interface AppContextType {
   getOptFromLocalStorage: () => Region;
   findBorderCountries: (codes: string) => Promise<void>;
   borders: Country[] | undefined;
-  // stringedBorders: string | undefined;
-  // setStringedBorders: React.Dispatch<React.SetStateAction<string | undefined>>;
-  // hello: string;
+  handleSearchInputChange: any;
+  inputVal: string;
+  searchError: {
+    msg: string;
+    status: boolean;
+  };
+  setInputVal: React.Dispatch<React.SetStateAction<string>>;
+  borderError: {
+    msg: string;
+    status: boolean;
+  };
 }
 
 // LITERAL TYPE
