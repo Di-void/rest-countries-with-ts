@@ -120,6 +120,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   const searchForCountries = async (query: string) => {
     try {
       setIsLoading(true);
+      query = query.replace(/[^a-zA-Z ]/g, "");
       const response = await axios(`${SEARCH_BY_NAME}${query}`);
       const data = response.data;
       const FRESH_ARR = Formatters.formatData(data, "fullsearch");
