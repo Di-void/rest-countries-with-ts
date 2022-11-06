@@ -68,6 +68,7 @@ export interface AppContextType {
   };
   inputVal: string;
   setInputVal: React.Dispatch<React.SetStateAction<string>>;
+  borderError: { msg: string; status: boolean };
 }
 
 // COMBINABLE TYPE FOR SEARCH QUERY DATA

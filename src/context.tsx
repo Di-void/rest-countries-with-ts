@@ -33,6 +33,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   const [allCountries, setAllCountries] = useState<Country[] | undefined>();
   const [error, setError] = useState({ msg: "", status: false });
   const [searchError, setSearchError] = useState({ msg: "", status: false });
+  const [borderError, setBorderError] = useState({ msg: "", status: false });
   const [isLoading, setIsLoading] = useState(true);
   const [borders, setBorders] = useState<Country[] | undefined>();
 
@@ -105,11 +106,11 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
       setBorders(FRESH_ARR);
     } catch (error) {
       console.log(error);
-      setError((old) => {
+      setBorderError((old) => {
         let newErr = {
           ...old,
           status: true,
-          msg: "Something's wrong.. ☹🙁. Try again later..",
+          msg: "Unable to load borders..",
         };
         return newErr;
       });
@@ -208,6 +209,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         searchError,
         inputVal,
         setInputVal,
+        borderError,
       }}
     >
       {children}

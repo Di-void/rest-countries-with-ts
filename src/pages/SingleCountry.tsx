@@ -26,7 +26,8 @@ const SingleCountry = () => {
     `https://restcountries.com/v3.1/name/${fullName}?fullText=true`,
     fetchSingleCountry
   );
-  const { findBorderCountries, borders, setError } = useGlobalContext();
+  const { findBorderCountries, borders, setError, borderError } =
+    useGlobalContext();
   let navigate = useNavigate();
 
   // * FUNCTIONS AND SIDE EFFECTS
@@ -166,6 +167,8 @@ const SingleCountry = () => {
             <div className="borders">
               {!stringedBorderCodes ? (
                 <p>NO BORDERS...</p>
+              ) : borderError.status ? (
+                <p>{borderError.msg}</p>
               ) : !borders ? (
                 mockBorders.map((obj) => {
                   return (
