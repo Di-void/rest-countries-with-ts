@@ -80,12 +80,14 @@ const HomePage = styled.main`
       /* border: 1px solid black; */
       padding: 1.2rem 1.4rem;
       margin-top: 30px;
-      display: grid;
-      grid-template-rows: repeat(8, 370px);
-      grid-row-gap: 1.5em;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em;
 
       /* =========LINK=========== */
       .link {
+        width: 100%;
+        height: 370px;
         background: transparent;
         border: transparent;
         overflow: hidden;
