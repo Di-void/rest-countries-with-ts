@@ -62,9 +62,6 @@ export const formatData = <T extends paramGeneric>(
       flags,
     } = country;
 
-    // const id = Math.random().toString(36).substring(2, 7);
-    // const id = index;
-
     return {
       commonName,
       officialName,
@@ -262,7 +259,6 @@ export const fetchSingleCountry = async (url: string): Promise<Country[]> => {
     const response = await axios(url);
     let data = response.data;
     data = formatData(data, "single") as Country[];
-    // console.log(data);
     return data;
   } catch (error) {
     throw new Error("Fetching Failed!");
