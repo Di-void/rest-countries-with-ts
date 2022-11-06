@@ -61,6 +61,16 @@ export interface AppContextType {
       status: boolean;
     }>
   >;
+  setSingleCountryErr: React.Dispatch<
+    React.SetStateAction<{
+      msg: string;
+      status: boolean;
+    }>
+  >;
+  singleCountryErr: {
+    msg: string;
+    status: boolean;
+  };
   handleSearchInputChange: any;
   searchError: {
     msg: string;

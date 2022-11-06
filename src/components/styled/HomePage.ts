@@ -80,15 +80,16 @@ const HomePage = styled.main`
       /* border: 1px solid black; */
       padding: 1.2rem 1.4rem;
       margin-top: 30px;
-      display: grid;
-      grid-template-rows: repeat(8, 350px);
-      grid-row-gap: 1.5em;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em;
 
       /* =========LINK=========== */
       .link {
-        display: block;
-        text-decoration: none;
+        width: 100%;
+        height: 370px;
         overflow: hidden;
+        text-decoration: none;
         border-radius: 7px;
         box-shadow: 0px 4px 21px -4px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease-in-out;

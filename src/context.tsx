@@ -34,6 +34,10 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   const [error, setError] = useState({ msg: "", status: false });
   const [searchError, setSearchError] = useState({ msg: "", status: false });
   const [borderError, setBorderError] = useState({ msg: "", status: false });
+  const [singleCountryErr, setSingleCountryErr] = useState({
+    msg: "",
+    status: false,
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [borders, setBorders] = useState<Country[] | undefined>();
 
@@ -56,7 +60,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         let newErr = {
           ...old,
           status: true,
-          msg: "Something's wrong.. ☹🙁. Try again later..",
+          msg: "Something's wrong.. ☹🙁. Try again",
         };
         return newErr;
       });
@@ -97,8 +101,6 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
 
   // ? FIND BORDER COUNTRIES
   const findBorderCountries = async (codes: string) => {
-    // console.log(codes);
-    // setBorders(codes);
     try {
       const response = await axios(`${SEARCH_BY_LIST_OF_CODES}${codes}`);
       const res: paramGeneric = response.data;
@@ -128,6 +130,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   const searchForCountries = async (query: string) => {
     try {
       setIsLoading(true);
+      query = query.replace(/^a-zA-Z/g, "");
       const response = await axios(`${SEARCH_BY_NAME}${query}`);
       const data = response.data;
       const FRESH_ARR = formatData(data, "fullsearch");
@@ -143,7 +146,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
           let newMsg = {
             ...oldMsg,
             status: true,
-            msg: "Country not found",
+            msg: "Uh oh. Country not found..",
           };
           return newMsg;
         });
@@ -210,6 +213,8 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         inputVal,
         setInputVal,
         borderError,
+        singleCountryErr,
+        setSingleCountryErr,
       }}
     >
       {children}

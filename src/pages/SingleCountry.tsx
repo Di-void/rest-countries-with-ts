@@ -26,8 +26,13 @@ const SingleCountry = () => {
     `https://restcountries.com/v3.1/name/${fullName}?fullText=true`,
     fetchSingleCountry
   );
-  const { findBorderCountries, borders, setError, borderError } =
-    useGlobalContext();
+  const {
+    findBorderCountries,
+    borders,
+    setSingleCountryErr,
+    borderError,
+    singleCountryErr,
+  } = useGlobalContext();
   let navigate = useNavigate();
 
   // * FUNCTIONS AND SIDE EFFECTS
@@ -44,15 +49,16 @@ const SingleCountry = () => {
 
   useEffect(() => {
     if (error) {
-      setError((old) => {
+      setSingleCountryErr((old) => {
         let newErr = {
           ...old,
           status: true,
+          msg: "Failed to Load Data...",
         };
         return newErr;
       });
     } else {
-      setError((old) => {
+      setSingleCountryErr((old) => {
         let newErr = {
           ...old,
           status: false,
@@ -69,7 +75,7 @@ const SingleCountry = () => {
   if (error) {
     return (
       <>
-        <p style={{ color: "red" }}>Failed to Load...</p>
+        <p className="all-error">{singleCountryErr.msg}</p>
         <Button>
           <button
             style={{ marginTop: "20px" }}
@@ -168,7 +174,7 @@ const SingleCountry = () => {
               {!stringedBorderCodes ? (
                 <p>NO BORDERS...</p>
               ) : borderError.status ? (
-                <p>{borderError.msg}</p>
+                <p className="all-error">{borderError.msg}</p>
               ) : !borders ? (
                 mockBorders.map((obj) => {
                   return (

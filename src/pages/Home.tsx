@@ -85,7 +85,7 @@ const Home = () => {
   // ! RETs....
 
   if (error.status) {
-    return <p style={{ color: "red" }}>Something's wrong.. Try reloading</p>;
+    return <p className="all-error">{error.msg}</p>;
   }
 
   return (
@@ -138,7 +138,7 @@ const Home = () => {
               return <CountryCardLoader key={country.id} />;
             })
           ) : !isLoading && searchError.status ? (
-            <p>{searchError.msg}</p>
+            <p className="all-error">{searchError.msg}</p>
           ) : (
             allCountries!.map((country) => {
               return (
