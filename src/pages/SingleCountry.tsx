@@ -2,12 +2,8 @@ import { useEffect } from "react";
 import SingleStyles from "../components/styled/Single";
 import Button from "../components/styled/Button";
 import { BiArrowBack } from "react-icons/bi";
-import {
-  numToString,
-  formatNativeName,
-  formatCurrencies,
-  formatLangs,
-} from "../utils/functions";
+import { Functions } from "../utils/functions";
+import Formatters = Functions.Formatters;
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
@@ -24,6 +20,27 @@ const SingleCountry = () => {
   const { findBorderCountries, borders, error } = useGlobalContext();
   let navigate = useNavigate();
   const location = useLocation();
+
+  // ! ERROR HANDLING FOR PARAM VALUES
+
+  if (!location.state) {
+    return (
+      <>
+        <p style={{ color: "red" }}>Failed to load!</p>
+        <Button>
+          <button
+            style={{ marginTop: "20px" }}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <BiArrowBack />
+            <span>Go Back Home</span>
+          </button>
+        </Button>
+      </>
+    );
+  }
   const originArr: Country[] = location.state.arr;
   const newCountry = originArr.find(
     (country) => country.id.toString() === id
@@ -31,11 +48,12 @@ const SingleCountry = () => {
   const { languages, currencies, nativeName, population, capital } = newCountry;
   const stringedBorderCodes = newCountry.borders?.join();
 
+  // * FUNCTIONS AND SIDE EFFECTS
+
   const hangleChangeRoute = (id: number, parentArr: Country[]) => {
     navigate(`/info/${id}`, { state: { arr: parentArr } });
   };
 
-  // * FUNCTIONS AND SIDE EFFECTS
   useEffect(() => {
     window.scrollTo(0, 0);
     if (stringedBorderCodes) {
@@ -100,10 +118,12 @@ const SingleCountry = () => {
             {/* ========FIRST SUB INFO========= */}
             <div className="info_2_1">
               <h4>
-                Native Name: <span>{formatNativeName(nativeName)}</span>
+                Native Name:{" "}
+                <span>{Formatters.formatNativeName(nativeName)}</span>
               </h4>
               <h4>
-                Population: <span>{numToString(population)}</span>
+                Population:{" "}
+                <span>{Functions.GenAndHelpers.numToString(population)}</span>
               </h4>
               <h4>
                 Region: <span>{newCountry.region}</span>
@@ -125,11 +145,15 @@ const SingleCountry = () => {
               </h4>
               <h4>
                 Currencies:{" "}
-                <span>{currencies ? formatCurrencies(currencies) : "NIL"}</span>
+                <span>
+                  {currencies ? Formatters.formatCurrencies(currencies) : "NIL"}
+                </span>
               </h4>
               <h4>
                 Languages:{" "}
-                <span>{languages ? formatLangs(languages) : "NIL"}</span>
+                <span>
+                  {languages ? Formatters.formatLangs(languages) : "NIL"}
+                </span>
               </h4>
             </div>
 

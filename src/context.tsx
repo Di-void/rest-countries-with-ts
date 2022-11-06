@@ -1,13 +1,9 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import { AppContextType, Country, Region } from "./interfaces";
 import { debounce } from "lodash";
-import {
-  cacheCountries,
-  formatData,
-  getCachedCountries,
-  isSearchError,
-  paramGeneric,
-} from "./utils/functions";
+import { isSearchError, paramGeneric } from "./utils/functions";
+import { Functions } from "./utils/functions";
+import Formatters = Functions.Formatters;
 import axios from "axios";
 
 const AppContext = React.createContext<AppContextType | null>(null);
@@ -44,8 +40,8 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
       setIsLoading(true);
       const response = await axios(url);
       const res: paramGeneric = response.data;
-      let FRESH_ARR = formatData(res);
-      cacheCountries(FRESH_ARR);
+      let FRESH_ARR = Formatters.formatData(res);
+      Functions.GenAndHelpers.cacheCountries(FRESH_ARR);
       setAllCountries(FRESH_ARR);
       setIsLoading(false);
     } catch (error) {
@@ -75,7 +71,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         setIsLoading(true);
         const response = await axios(`${SEARCH_BY_REGION}/${val}`);
         const res: paramGeneric = response.data;
-        let FRESH_ARR = formatData(res, "region");
+        let FRESH_ARR = Formatters.formatData(res, "region");
         setIsLoading(false);
         setAllCountries(FRESH_ARR);
       } catch (error) {
@@ -96,9 +92,10 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   // ? FIND BORDER COUNTRIES
   const findBorderCountries = async (codes: string) => {
     try {
+      setBorders(undefined);
       const response = await axios(`${SEARCH_BY_LIST_OF_CODES}${codes}`);
       const res: paramGeneric = response.data;
-      let FRESH_ARR = formatData(res, "borders");
+      let FRESH_ARR = Formatters.formatData(res, "borders");
       setBorders(FRESH_ARR);
     } catch (error) {
       console.log(error);
@@ -126,7 +123,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
       setIsLoading(true);
       const response = await axios(`${SEARCH_BY_NAME}${query}`);
       const data = response.data;
-      const FRESH_ARR = formatData(data, "fullsearch");
+      const FRESH_ARR = Formatters.formatData(data, "fullsearch");
       setAllCountries(FRESH_ARR);
       setIsLoading(false);
       setSearchError((oldMsg) => {
@@ -182,7 +179,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         let newMsg = { ...oldMsg, status: false, msg: "" };
         return newMsg;
       });
-      setAllCountries(getCachedCountries);
+      setAllCountries(Functions.GenAndHelpers.getCachedCountries);
       return;
     }
 
