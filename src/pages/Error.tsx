@@ -39,6 +39,7 @@ const Wrapper = styled.section`
     left: 50%;
     transform: translate(-50%, -50%);
     h3 {
+      color: var(--clr-Txt);
       text-align: center;
     }
   }

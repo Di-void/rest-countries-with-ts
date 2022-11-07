@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import { AppContextType, Country, Region } from "./interfaces";
 import { debounce } from "lodash";
-import { isSearchError, paramGeneric } from "./utils/functions";
-import { Functions } from "./utils/functions";
+import { isSearchError, paramGeneric, Functions } from "./utils/functions";
 import Formatters = Functions.Formatters;
 import axios from "axios";
 

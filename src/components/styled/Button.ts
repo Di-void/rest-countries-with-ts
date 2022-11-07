@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Button = styled.div`
   button {
+    color: var(--clr-Txt);
     text-decoration: none;
     font-family: var(--ff-primary);
     display: flex;
@@ -11,6 +12,7 @@ const Button = styled.div`
     border: transparent;
     border-radius: 3px;
     background: transparent;
+    background-color: var(--clr-Elems);
     cursor: pointer;
     box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
     span {
