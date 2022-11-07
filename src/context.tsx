@@ -60,7 +60,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         let newErr = {
           ...old,
           status: true,
-          msg: "Something's wrong.. ☹🙁. Try again",
+          msg: "Something's wrong.. ☹🙁. Try reloading",
         };
         return newErr;
       });
