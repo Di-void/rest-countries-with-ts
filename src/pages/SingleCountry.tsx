@@ -91,7 +91,7 @@ const SingleCountry = () => {
     );
   }
   if (!data) {
-    return <p>Loading...</p>;
+    return <p className="loading_">Loading...</p>;
   }
   const newCountry = data[0];
   const { languages, currencies, nativeName, population, capital } = newCountry;
@@ -179,7 +179,7 @@ const SingleCountry = () => {
                 mockBorders.map((obj) => {
                   return (
                     <div key={obj.id}>
-                      <Skeleton height="100%" />
+                      <Skeleton className="loader" height="100%" />
                     </div>
                   );
                 })

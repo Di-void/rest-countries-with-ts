@@ -12,11 +12,13 @@ const SingleStyles = styled.section`
       font-family: var(--ff-primary);
       display: flex;
       align-items: center;
+      color: var(--clr-Txt);
       justify-content: center;
       padding: 0.4rem 1.75rem;
       border: transparent;
       border-radius: 3px;
       background: transparent;
+      background-color: var(--clr-Elems);
       cursor: pointer;
       box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
       span {
@@ -32,6 +34,7 @@ const SingleStyles = styled.section`
   .center {
     //
     .flag {
+      box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
       height: 250px;
       width: 100%;
       img {
@@ -43,7 +46,7 @@ const SingleStyles = styled.section`
     // INFO
 
     .info {
-      //
+      color: var(--clr-Txt);
       .title {
         margin-top: 30px;
         h2 {
@@ -96,14 +99,19 @@ const SingleStyles = styled.section`
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(min-content, 100px));
           grid-gap: 1em;
+
           margin-top: 10px;
           .border-link {
+            background-color: var(--clr-Elems);
+            color: var(--clr-Txt);
             box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.1);
             border-radius: 3px;
             padding: 0.35rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
             text-decoration: none;
-            color: black;
             cursor: pointer;
           }
         }
