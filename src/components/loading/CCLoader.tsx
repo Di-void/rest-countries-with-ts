@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 // ? [---------LOADING COMPONENTS-------------]
@@ -9,13 +9,13 @@ const CountryCardLoader = () => {
   return (
     <Wrapper>
       <div className="img">
-        <Skeleton height="100%" />
+        <Skeleton className="loader" height="100%" />
       </div>
 
       <div className="info">
         <header>
           <h3>
-            <Skeleton count={1} />
+            <Skeleton className="loader" count={1} />
           </h3>
         </header>
 
@@ -23,19 +23,19 @@ const CountryCardLoader = () => {
           <h5>
             <span>Population:</span>
             <div>
-              <Skeleton width="100%" containerClassName="ll" count={1} />
+              <Skeleton width="100%" className="loader" count={1} />
             </div>
           </h5>
           <h5>
             <span>Region:</span>
             <div>
-              <Skeleton width="100%" count={1} />
+              <Skeleton width="100%" className="loader" count={1} />
             </div>
           </h5>
           <h5>
             <span>Capital:</span>
             <div>
-              <Skeleton width="100%" count={1} />
+              <Skeleton width="100%" className="loader" count={1} />
             </div>
           </h5>
         </div>
@@ -66,6 +66,8 @@ const Wrapper = styled.article`
   /* ========INFO BOX========== */
   .info {
     padding: 0.75rem;
+    color: var(--clr-Txt);
+    background-color: var(--clr-Elems);
 
     header {
       //

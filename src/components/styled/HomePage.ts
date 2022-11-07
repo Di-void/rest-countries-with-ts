@@ -11,12 +11,13 @@ const HomePage = styled.main`
       /* =========SEARCHBAR========== */
       .searchbar {
         box-shadow: 0px 4px 21px -4px rgba(0, 0, 0, 0.1);
-        background-color: white;
-        color: var(--clr-LMInp);
+        background-color: var(--clr-Elems);
+        color: var(--clr-Txt);
         padding: 0 1.5rem;
         display: flex;
         align-items: center;
         .s-icon {
+          color: var(--clr-Txt);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -26,11 +27,14 @@ const HomePage = styled.main`
         }
 
         .input {
+          background-color: var(--clr-Elems);
           padding: 1.5rem 0;
           height: 100%;
           width: 80%;
           margin-left: 30px;
           input {
+            background-color: var(--clr-Elems);
+            color: var(--clr-Txt);
             width: 100%;
             border: transparent;
             outline: none;
@@ -50,8 +54,9 @@ const HomePage = styled.main`
 
       .select_regions {
         /* border: 1px solid black; */
-        background-color: white;
+        background-color: var(--clr-Elems);
         margin-top: 30px;
+        color: var(--clr-Txt);
         width: 47%;
         height: 50px;
         max-width: 210px;
@@ -61,7 +66,8 @@ const HomePage = styled.main`
         select {
           outline: none;
           border: transparent;
-          background-color: white;
+          background-color: var(--clr-Elems);
+          color: var(--clr-Txt);
           width: 100%;
           height: 100%;
           font-size: 14px;
@@ -115,15 +121,20 @@ const HomePage = styled.main`
         .info {
           height: 45%;
           padding: 0.75rem;
-          color: black;
+          background-color: var(--clr-Elems);
+          color: var(--clr-Txt);
 
           header {
             text-align: left;
+            h3 {
+              color: var(--clr-Txt);
+            }
           }
 
           .metrics {
             margin-top: 15px;
             text-align: left;
+            color: var(--clr-Txt);
             h5 {
               font-size: 14px;
               font-weight: 600;

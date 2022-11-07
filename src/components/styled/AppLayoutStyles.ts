@@ -5,9 +5,9 @@ const AppLayoutStyles = styled.main`
 
   .outlet_section {
     margin-top: calc(150px - 77px);
-    min-height: 85vh;
+    min-height: 88.4vh;
     padding: 1.4rem 1rem;
-    background-color: hsl(0, 0%, 98%);
+    background-color: var(--clr-Bg);
   }
 `;
 

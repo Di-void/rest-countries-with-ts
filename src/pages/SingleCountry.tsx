@@ -174,7 +174,7 @@ const SingleCountry = () => {
                 mockBorders.map((obj) => {
                   return (
                     <div key={obj.id}>
-                      <Skeleton height="100%" />
+                      <Skeleton className="loader" height="100%" />
                     </div>
                   );
                 })

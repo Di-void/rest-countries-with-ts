@@ -11,6 +11,7 @@ const SingleStyles = styled.section`
   .center {
     //
     .flag {
+      box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
       height: 250px;
       width: 100%;
       img {
@@ -22,7 +23,7 @@ const SingleStyles = styled.section`
     // INFO
 
     .info {
-      //
+      color: var(--clr-Txt);
       .title {
         margin-top: 30px;
         h2 {
@@ -78,6 +79,8 @@ const SingleStyles = styled.section`
           margin-top: 10px;
           button {
             background-color: transparent;
+            background-color: var(--clr-Elems);
+            color: var(--clr-Txt);
             border: transparent;
             box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.1);
             border-radius: 3px;
