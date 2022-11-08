@@ -45,7 +45,7 @@ const Navbar = () => {
 };
 
 const Wrapper = styled.nav`
-  /* border: 1px solid black; */
+  /* border: 1px solid black;/ */
   z-index: 99 !important;
   background-color: var(--clr-Elems);
   color: var(--clr-Txt);
@@ -57,6 +57,10 @@ const Wrapper = styled.nav`
   align-items: center;
   padding: 1.5rem 0.75rem;
   box-shadow: 0px 13px 2px -9px rgba(0, 0, 0, 0.1);
+
+  @media screen and (min-width: 900px) {
+    padding: 1.5rem 2.3rem;
+  }
 
   h3 {
     cursor: pointer;
