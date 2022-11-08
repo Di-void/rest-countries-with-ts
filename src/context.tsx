@@ -101,7 +101,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         let newErr = {
           ...old,
           status: true,
-          msg: "Unable to load border data..",
+          msg: "Unable to load border data.. Try reloading",
         };
         return newErr;
       });

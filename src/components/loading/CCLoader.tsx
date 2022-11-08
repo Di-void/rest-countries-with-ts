@@ -46,6 +46,7 @@ const CountryCardLoader = () => {
 
 const Wrapper = styled.article`
   /* border: 1px solid black; */
+  width: 100%;
   overflow: hidden;
   border-radius: 7px;
   box-shadow: 0px 4px 21px -4px rgba(0, 0, 0, 0.1);

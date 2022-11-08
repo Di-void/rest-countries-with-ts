@@ -14,6 +14,7 @@ const SingleStyles = styled.section`
       box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
       height: 250px;
       width: 100%;
+      max-width: 400px;
       img {
         width: 100%;
         height: 100%;
@@ -23,9 +24,17 @@ const SingleStyles = styled.section`
     // INFO
 
     .info {
+      /* border: 1px solid black; */
       color: var(--clr-Txt);
+      @media screen and (min-width: 1100px) {
+        margin-top: 0;
+        width: 70%;
+      }
       .title {
         margin-top: 30px;
+        @media screen and (min-width: 1100px) {
+          margin-top: 0;
+        }
         h2 {
           //
         }
@@ -35,8 +44,17 @@ const SingleStyles = styled.section`
       .info_2 {
         /* border: 1px solid black; */
         margin-top: 30px;
+
+        @media screen and (min-width: 700px) {
+          display: grid;
+          grid-template-columns: 40% 50%;
+          gap: 1.6em;
+        }
+        @media screen and (min-width: 1100px) {
+          margin-top: 15px;
+        }
         .info_2_1 {
-          //
+          /* border: 1px solid black; */
           h4 {
             margin-top: 10px;
             font-size: 16px;
@@ -48,7 +66,11 @@ const SingleStyles = styled.section`
         }
 
         .info_2_2 {
+          /* border: 1px solid black; */
           margin-top: 30px;
+          @media screen and (min-width: 700px) {
+            margin-top: 0;
+          }
           h4 {
             margin-top: 10px;
             font-size: 16px;
@@ -66,6 +88,11 @@ const SingleStyles = styled.section`
         width: initial;
         max-width: 390px;
         margin-top: 30px;
+        @media screen and (min-width: 700px) {
+          display: flex;
+          max-width: 100%;
+          align-items: center;
+        }
         h3 {
           font-weight: 600;
         }
@@ -74,9 +101,15 @@ const SingleStyles = styled.section`
           /* border: 1px solid black; */
           padding: 0.35rem;
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(min-content, 100px));
+          grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
           grid-gap: 1em;
           margin-top: 10px;
+
+          @media screen and (min-width: 700px) {
+            width: 70%;
+            margin-left: 20px;
+            margin-top: 0;
+          }
           button {
             background-color: transparent;
             background-color: var(--clr-Elems);
@@ -94,6 +127,18 @@ const SingleStyles = styled.section`
             }
           }
         }
+      }
+    }
+
+    @media screen and (min-width: 1100px) {
+      display: flex;
+      /* justify-content: space-between; */
+      .flag {
+        height: 45vh;
+      }
+      .info {
+        /* border: 1px solid black; */
+        margin-left: 100px;
       }
     }
 

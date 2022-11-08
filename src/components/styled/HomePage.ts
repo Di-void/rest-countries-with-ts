@@ -6,7 +6,13 @@ const HomePage = styled.main`
   ._center {
     //
     header {
-      /* border: 1px solid black; */
+      @media screen and (min-width: 700px) {
+        display: flex;
+        justify-content: space-between;
+      }
+      @media screen and (min-width: 1000px) {
+        padding: 0 1.5rem;
+      }
 
       /* =========SEARCHBAR========== */
       .searchbar {
@@ -16,13 +22,17 @@ const HomePage = styled.main`
         padding: 0 1.5rem;
         display: flex;
         align-items: center;
+
+        @media screen and (min-width: 700px) {
+          width: 60%;
+          max-width: 500px;
+        }
         .s-icon {
           color: var(--clr-Txt);
           display: flex;
           justify-content: center;
           align-items: center;
           width: 15%;
-          /* border: 1px solid black; */
           font-size: 20px;
         }
 
@@ -32,6 +42,9 @@ const HomePage = styled.main`
           height: 100%;
           width: 80%;
           margin-left: 30px;
+          @media screen and (min-width: 700px) {
+            padding: 0.8rem 0;
+          }
           input {
             background-color: var(--clr-Elems);
             color: var(--clr-Txt);
@@ -59,9 +72,13 @@ const HomePage = styled.main`
         color: var(--clr-Txt);
         width: 47%;
         height: 50px;
-        max-width: 210px;
+        max-width: 200px;
         box-shadow: 0px 4px 21px -4px rgba(0, 0, 0, 0.1);
         padding: 0.3rem 0.75rem;
+
+        @media screen and (min-width: 700px) {
+          margin-top: 0;
+        }
 
         select {
           outline: none;
@@ -83,12 +100,18 @@ const HomePage = styled.main`
     }
 
     .countries {
-      /* border: 1px solid black; */
       padding: 1.2rem 1.4rem;
       margin-top: 30px;
       display: flex;
+      align-items: center;
       flex-direction: column;
       gap: 1.5em;
+
+      @media screen and (min-width: 700px) {
+        display: grid;
+        justify-items: center;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      }
 
       /* =========LINK=========== */
       .link {
@@ -97,11 +120,14 @@ const HomePage = styled.main`
         background: transparent;
         border: transparent;
         overflow: hidden;
-        /* border: 1px solid black; */
         border-radius: 7px;
         box-shadow: 0px 4px 21px -4px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease-in-out;
         cursor: pointer;
+
+        @media screen and (min-width: 300px) {
+          max-width: 320px;
+        }
 
         &:hover {
           box-shadow: 0px 4px 7px 17px rgba(0, 0, 0, 0.1);
@@ -125,6 +151,8 @@ const HomePage = styled.main`
           color: var(--clr-Txt);
 
           header {
+            border: none;
+            padding: 0;
             text-align: left;
             h3 {
               color: var(--clr-Txt);
