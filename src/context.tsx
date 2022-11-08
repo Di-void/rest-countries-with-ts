@@ -14,7 +14,6 @@ interface ProviderProps {
 
 // OTHER FUNCTIONS AND GLOBALS
 
-const DEVALL_URL = "http://localhost:3000/all";
 const PRODALL_URL = "https://restcountries.com/v3.1/all";
 const SEARCH_BY_NAME = "https://restcountries.com/v3.1/name/";
 const SEARCH_BY_REGION = "https://restcountries.com/v3.1/region";
@@ -65,7 +64,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
       return newMsg;
     });
     if (val === "all") {
-      fetchAllCountries(DEVALL_URL);
+      fetchAllCountries(PRODALL_URL);
     } else {
       try {
         setIsLoading(true);
@@ -168,7 +167,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchAllCountries(DEVALL_URL);
+    fetchAllCountries(PRODALL_URL);
     saveOptToLocalStorage("all");
   }, []);
 

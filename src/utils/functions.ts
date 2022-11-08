@@ -220,14 +220,14 @@ export namespace Functions {
       // PROD
       // * lower bound = 0 - 117 (PROD)
       // * upper bound = 126 - 200(PROD)
-      // const lower = GenAndHelpers.randomInteger(0, 117);
-      // const upper = GenAndHelpers.randomInteger(126, 202);
+      const lower = GenAndHelpers.randomInteger(0, 117);
+      const upper = GenAndHelpers.randomInteger(126, 202);
       // ------------END PROD------------
       // --------DEV------
       // * lower bound = 0 - 9(DEV)
       // * upper bound = 10 - 19(DEV)
-      const lower = GenAndHelpers.randomInteger(0, 4);
-      const upper = GenAndHelpers.randomInteger(15, 19);
+      // const lower = GenAndHelpers.randomInteger(0, 4);
+      // const upper = GenAndHelpers.randomInteger(15, 19);
       // -----------END DEV--------------
       newData = newData.slice(lower, upper);
       newData = _.shuffle(newData);
