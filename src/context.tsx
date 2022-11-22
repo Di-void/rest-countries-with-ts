@@ -169,12 +169,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
 
   useEffect(() => {
     saveOptToLocalStorage("all");
-    const opt = getOptFromLocalStorage();
-    if (opt === "all") {
-      fetchAllCountries(PRODALL_URL);
-    }
-    setAllCountries(Functions.GenAndHelpers.getCachedCountries);
-    setIsLoading(false);
+    fetchAllCountries(PRODALL_URL);
   }, []);
 
   useEffect(() => {
