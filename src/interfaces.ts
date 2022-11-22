@@ -20,7 +20,7 @@ export interface Country {
   id: number;
   commonName: string;
   officialName: string;
-  nativeName: {
+  nativeName?: {
     [key: string]:
       | {
           official: string;

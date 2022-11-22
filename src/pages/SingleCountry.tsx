@@ -120,7 +120,9 @@ const SingleCountry = () => {
             <div className="info_2_1">
               <h4>
                 Native Name:{" "}
-                <span>{Formatters.formatNativeName(nativeName)}</span>
+                <span>
+                  {nativeName ? Formatters.formatNativeName(nativeName) : "NIL"}
+                </span>
               </h4>
               <h4>
                 Population:{" "}
@@ -130,7 +132,10 @@ const SingleCountry = () => {
                 Region: <span>{newCountry.region}</span>
               </h4>
               <h4>
-                Sub Region: <span>{newCountry.subregion}</span>
+                Sub Region:{" "}
+                <span>
+                  {newCountry.subregion ? newCountry.subregion : "NIL"}
+                </span>
               </h4>
               <h4>
                 Capital: <span>{capital ? capital[0] : "NIL"}</span>
