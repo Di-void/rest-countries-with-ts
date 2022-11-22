@@ -66,6 +66,8 @@ export interface AppContextType {
     msg: string;
     status: boolean;
   };
+  selected: Region;
+  setSelected: React.Dispatch<React.SetStateAction<Region>>;
 }
 
 // LITERAL TYPE

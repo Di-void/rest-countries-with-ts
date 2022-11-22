@@ -4,7 +4,7 @@ import { CountryCard } from "../components";
 import CountryCardLoader from "../components/loading/CCLoader";
 import { useGlobalContext } from "../context";
 import { mockAll } from "../utils/MockAll";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Country, Region } from "../interfaces";
 import { useNavigate } from "react-router-dom";
 
@@ -15,15 +15,20 @@ const Home = () => {
     isLoading,
     error,
     filterByRegion,
-    getOptFromLocalStorage,
     saveOptToLocalStorage,
     inputVal,
     setInputVal,
     handleSearchInputChange,
     searchError,
+    selected,
+    setSelected,
   } = useGlobalContext();
-  const [selected, setSelected] = useState<Region>("all");
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // * LOGIC LAYER
 
@@ -79,15 +84,6 @@ const Home = () => {
     setInputVal(e.target.value);
     handleSearchInputChange(e.target.value);
   };
-
-  useEffect(() => {
-    const Region = getOptFromLocalStorage();
-    setSelected(Region);
-  }, []);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   // ! RETs....
 

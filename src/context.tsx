@@ -30,6 +30,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   const [borderError, setBorderError] = useState({ msg: "", status: false });
   const [isLoading, setIsLoading] = useState(true);
   const [borders, setBorders] = useState<Country[] | undefined>();
+  const [selected, setSelected] = useState<Region>("all");
 
   // * FUNCTIONS AND SIDE EFFECTS
 
@@ -167,8 +168,13 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchAllCountries(PRODALL_URL);
     saveOptToLocalStorage("all");
+    const opt = getOptFromLocalStorage();
+    if (opt === "all") {
+      fetchAllCountries(PRODALL_URL);
+    }
+    setAllCountries(Functions.GenAndHelpers.getCachedCountries);
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -183,6 +189,7 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
 
     searchForCountries(searchQuery);
   }, [searchQuery]);
+
   // ! RETs...
   return (
     <AppContext.Provider
@@ -200,6 +207,8 @@ const AppProvider: React.FC<ProviderProps> = ({ children }) => {
         setInputVal,
         handleSearchInputChange,
         borderError,
+        selected,
+        setSelected,
       }}
     >
       {children}
