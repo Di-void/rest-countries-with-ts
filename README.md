@@ -37,8 +37,6 @@ Users should be able to:
 ![](./screenshot_1.png)
 ![](./screenshot.png)
 
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
-
 ### Links
 
 - Solution URL: [My Solution](https://github.com/Multimarix/rest-countries-with-ts)
